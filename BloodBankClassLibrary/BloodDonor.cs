@@ -22,6 +22,11 @@ namespace Bloodbank
             BloodGroup = bloodgroup;
         }
 
+        public override string ToString()
+        {
+            return FirstName + " " + LastName + " " + IDNumber + " " + Email + " " + BloodGroup;
+        }
+
 
 
     }
