@@ -12,6 +12,8 @@ namespace Bloodbank
             {
                 Console.WriteLine(donor1.FirstName + " " + donor1.LastName + " " + donor1.BloodGroup + " " + donor1.IDNumber);
             }
+
+            Console.WriteLine(donor1);
         }
     }
 }
