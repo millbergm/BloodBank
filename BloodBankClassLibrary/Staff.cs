@@ -1,4 +1,4 @@
-using system.collections.generic;
+//using system.collections.generic;
 
 namespace Bloodbank
 {
@@ -6,10 +6,10 @@ namespace Bloodbank
     {
         public string FirstName { get; set; }   
         public string LastName { get; set; }    
-        public int IDNumber { get; set; }   
+        public long IDNumber { get; set; }   
         public string Title { get; set; }
 
-        public Staff(string firstName, string lastName, int iDNumber, string title)
+        public Staff(string firstName, string lastName, long iDNumber, string title)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
