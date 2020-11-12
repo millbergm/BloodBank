@@ -4,6 +4,6 @@ namespace Bloodbank
     {
         string FirstName { get; set; }
         string LastName { get; set; }
-        int IDNumber { get; set;}
+        long IDNumber { get; set;}
     }
 }

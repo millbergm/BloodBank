@@ -6,22 +6,20 @@ namespace Bloodbank
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int IDNumber { get; set; }
+        public long IDNumber { get; set; }
         public string Email { get; set; }
         public bool AvailableToDonate { get; set; } = true;
         public bool HealthOK { get; set; } = true;
-        public Bloodtype BloodType { get; set; }
+        public BloodGroup BloodGroup { get; set; }
         public DateTime LatestDonation { get; set; }
 
-        public BloodDonor (string firstname, string lastname, int idnumber, string email, Bloodtype bloodtype)
+        public BloodDonor (string firstname, string lastname, long idnumber, string email, BloodGroup bloodgroup)
         {
-            this.FirstName = firstname;
+            FirstName = firstname;
             LastName = lastname;
             IDNumber = idnumber;
             Email = email;
-            BloodType = bloodtype;
-            
-
+            BloodGroup = bloodgroup;
         }
 
 

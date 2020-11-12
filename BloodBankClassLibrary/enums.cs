@@ -1,7 +1,7 @@
 namespace Bloodbank
 {
 
-    public enum Bloodtype
+    public enum BloodGroup
     {
          O = 1,
          A = 2,

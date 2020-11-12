@@ -1,12 +1,14 @@
 ﻿using System;
 
-namespace BloodBankConsole
+namespace Bloodbank
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            BloodDonor donor1 = new BloodDonor("Maria", "Larsson", 8604241234, "maria.larsson@hotmail.com", BloodGroup.A);
+
+            Console.WriteLine(donor1);
         }
     }
 }
