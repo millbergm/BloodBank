@@ -10,7 +10,7 @@ namespace Bloodbank
         public string Email { get; set; }
         public bool AvailableToDonate { get; set; } = true;
         public bool HealthOK { get; set; } = true;
-        public int BloodType { get; set; }
+        public Bloodtype BloodType { get; set; }
         public DateTime LatestDonation { get; set; }
 
         public BloodDonor (string firstname, string lastname, int idnumber, string email, Bloodtype bloodtype)
