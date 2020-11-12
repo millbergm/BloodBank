@@ -15,11 +15,11 @@ namespace Bloodbank
 
         public BloodDonor (string firstname, string lastname, long idnumber, string email, BloodGroup bloodgroup)
         {
-            FirstName = firstname;
-            LastName = lastname;
-            IDNumber = idnumber;
-            Email = email;
-            BloodGroup = bloodgroup;
+            this.FirstName = firstname;
+            this.LastName = lastname;
+            this.IDNumber = idnumber;
+            this.Email = email;
+            this.BloodGroup = bloodgroup;
         }
 
         public override string ToString()
