@@ -15,7 +15,7 @@ namespace Bloodbank
             string idnumber = "1234567";
             string email = "test@mail.com";
             BloodGroup bloodGroup = BloodGroup.O;
-            User newDonor = new BloodDonor(firstName, lastName, idnumber, email, bloodGroup);
+            User newDonor = new BloodDonor(firstName, lastName, idnumber, email, 0, 0, bloodGroup);
             bb.AddUser(newDonor);
 
 

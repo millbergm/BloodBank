@@ -22,11 +22,11 @@ namespace Bloodbank
                     {
                         if (user.GetType() == typeof(BloodDonor))
                         {
-                            sqlConnection.Execute("INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, LatestDonation, Email) VALUES (@user.IDNumber, @user.Firstname, @user.LastName, @user.AvailableToDonate, @user.HealthOK, @Bloodgroup, @LatestDonation, @Email)", user);
+                            sqlConnection.Execute("EXEC AddDonor (IDNumber, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, Email) VALUES (@user.IDNumber, @user.Firstname, @user.LastName, @user.AvailableToDonate, @user.HealthOK, @Bloodgroup, @Email)", user);
                         }
                         else if (user.GetType() == typeof(Staff))
                         {
-                            sqlConnection.Execute("INSERT INTO Staff (ID, FirstName, LastName, Title) VALUES (@IDNumber, @FirstName, @LastName)", user);
+                            sqlConnection.Execute("EXEC AddStaff (IDNumber, FirstName, LastName, Title) VALUES (@IDNumber, @FirstName, @LastName)", user);
                         }
                         
                     }
@@ -40,7 +40,7 @@ namespace Bloodbank
                 }
            }
         }
-        public IEnumerable<User> CheckUserFromDB()
+        public IEnumerable<User> GetUserFromDB()
         {
             for (int i = 0; i < 5; i++)
             {
@@ -49,7 +49,8 @@ namespace Bloodbank
                     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                     {
                         //TODO
-                        return sqlConnection.Query<User>("SELECT nånting....");
+                        return sqlConnection.Query<User>("EXEC GetDonor");
+                        
                     }
                 }
                 catch (System.Exception)
@@ -103,8 +104,7 @@ namespace Bloodbank
                         throw;
                     }
                 }
-            }
-            
+            }  
         }
         public IEnumerable<string> RequestDonations(BloodGroup bloodgroup)
         {
@@ -136,7 +136,8 @@ namespace Bloodbank
                     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                     {
                         //TODO
-                        return sqlConnection.Query<User>("EXEC GetUserLogin @idnumber, @password;", userID, password);
+                        return sqlConnection.Query<User>("EXEC GetUserLogin @idnumber, @password;", (userID, password));
+                        // 0 = does not exist, 1 = donor, 2 = staff
                     }
                 }
                 catch (System.Exception)
