@@ -72,7 +72,7 @@ end
 
 go
 
-create or alter procedure GetDonorInfo(@idnumber varchar(50))
+create or alter procedure GetDonor(@idnumber varchar(50))
 as
 begin
 select Donors.FirstName, Donors.LastName, Donors.ID, Donors.Email, Donors.AvailableToDonate, Donors.HealthOK, Donors.BloodGroupID, Donors.LatestDonation from Donors	

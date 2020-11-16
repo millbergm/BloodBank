@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Dapper;
+using System;
 
 namespace Bloodbank
 {
@@ -40,15 +41,20 @@ namespace Bloodbank
                 }
            }
         }
-        public IEnumerable<User> GetUserFromDB()
+        public IEnumerable<User> GetUserFromDB(object o)
         {
+            int loginStatus = Convert.ToInt32(o);
             for (int i = 0; i < 5; i++)
             {
+                if (loginStatus == 1)
+                {
+                    ///////////////////////////////////
+                }
                 try
                 {
                     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                     {
-                        //TODO
+                        //TODO/////////////////////////////////////////////////////////////////////////////////////////
                         return sqlConnection.Query<User>("EXEC GetDonor");
                         
                     }
@@ -93,7 +99,7 @@ namespace Bloodbank
                 {
                     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                     {
-                        sqlConnection.Execute("INSERT INTO BloodBank (AmountOfBlood, BloodGroupID, DonorID, StaffID) VALUES (@donation.AmountOfBlood, @donation.Bloodgroup, @donation.DonorID, @donation.StaffID)", donation);
+                        sqlConnection.Execute("EXEC AddDonation (@AmountOfBlood, @Bloodgroup, @DonorID, @StaffID)", donation);
                         continue;
                     }
                 }
@@ -136,7 +142,7 @@ namespace Bloodbank
                     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                     {
                         //TODO
-                        return sqlConnection.Query<User>("EXEC GetUserLogin @idnumber, @password;", (userID, password));
+                        GetUserFromDB(sqlConnection.Query<User>("EXEC GetUserLogin @idnumber, @password;", (userID, password)));
                         // 0 = does not exist, 1 = donor, 2 = staff
                     }
                 }
