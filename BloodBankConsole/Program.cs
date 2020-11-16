@@ -19,21 +19,10 @@ namespace Bloodbank
             bb.AddUser(newDonor);
 
 
-
-
-            BloodDonor donor1 = new BloodDonor("Maria", "Larsson", "8604241234", "maria.larsson@hotmail.com", BloodGroup.A);
-
-            // if (donor1.AvailableToDonate)
-            // {
-            //     Console.WriteLine(donor1.FirstName + " " + donor1.LastName + " " + donor1.BloodGroup + " " + donor1.IDNumber);
-            // }
-
-
-
-            Console.WriteLine(donor1);
+            
 
     // logga in
-    //  string name;
+    //         string name;
     //         string password;
     //         Console.WriteLine("Skriv in ditt användarnamn");
     //         Console.Write(":> ");
@@ -43,7 +32,7 @@ namespace Bloodbank
     //         password = Console.ReadLine();
 
     //         //  ---Act
-    //         if (loginSystem.TryValidateUser(name, password))
+    //         if (TryValidateUser(name, password))
     //         {
     //             Console.WriteLine("Inloggningen lyckades, välkommen!");
     //         }

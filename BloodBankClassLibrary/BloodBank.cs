@@ -16,24 +16,24 @@ namespace Bloodbank
 
         // }
 
-        // public bool TryValidateUser(string username, string password)
-        // {
-        //     foreach (User userLOKAL in users)
-        //     {
-        //         if (userLOKAL.Name == username) //ifall användaren finns "gå in här"
-        //         {
-        //             if (userLOKAL.Password == password)
-        //             {
-        //                 return true;
-        //             }
-        //             else
-        //             {
-        //                 return false;
-        //             }
-        //         }
-        //     }
-        //     return false;
-        // }
+        public bool TryValidateUser(string username, string password)
+        {
+            foreach (User userLOKAL in users)
+            {
+                if (userLOKAL.Name == username) //ifall användaren finns "gå in här"
+                {
+                    if (userLOKAL.Password == password)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            return false;
+        }
 
         void AddDonation(Donation donation)
         {

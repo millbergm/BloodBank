@@ -22,11 +22,11 @@ namespace Bloodbank
                     {
                         if (user.GetType() == typeof(BloodDonor))
                         {
-                            sqlConnection.Execute("INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, LatestDonation, Email) VALUES (@user.IDNumber, @user.Firstname, @user.LastName, @user.AvailableToDonate, @user.HealthOK, @Bloodgroup)", user);
+                            sqlConnection.Execute("INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, LatestDonation, Email) VALUES (@user.IDNumber, @user.Firstname, @user.LastName, @user.AvailableToDonate, @user.HealthOK, @Bloodgroup, @LatestDonation, @Email)", user);
                         }
                         else if (user.GetType() == typeof(Staff))
                         {
-                            sqlConnection.Execute("INSERT INTO ()");
+                            sqlConnection.Execute("INSERT INTO Staff (ID, FirstName, LastName, Title) VALUES (@IDNumber, @FirstName, @LastName)", user);
                         }
                         
                     }
@@ -92,8 +92,7 @@ namespace Bloodbank
                 {
                     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                     {
-                        //TODO
-                        sqlConnection.Execute("INSERT::::");
+                        sqlConnection.Execute("INSERT INTO BloodBank (AmountOfBlood, BloodGroupID, DonorID, StaffID) VALUES (@donation.AmountOfBlood, @donation.Bloodgroup, @donation.DonorID, @donation.StaffID)", donation);
                         continue;
                     }
                 }
@@ -107,5 +106,48 @@ namespace Bloodbank
             }
             
         }
+        public IEnumerable<string> RequestDonations(BloodGroup bloodgroup)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    {
+                        return sqlConnection.Query<string>("EXEC RequestDonation @bloodgroup;", bloodgroup);
+                    }
+                }
+                catch (System.Exception)
+                {
+                    if (i == 5)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return null;
+        }
+        public IEnumerable<User> CheckUserLogin(string userID, string password)
+        {
+             for (int i = 0; i < 5; i++)
+            {
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    {
+                        //TODO
+                        return sqlConnection.Query<User>("EXEC GetUserLogin @idnumber, @password;", userID, password);
+                    }
+                }
+                catch (System.Exception)
+                {
+                    if (i == 5)
+                    {
+                        throw;
+                    }
+                }
+            }
+            return null;
+        } 
     }
 }

@@ -10,3 +10,12 @@ select * from Donors
 
 select donors.id, firstname, LastName, BloodGroups.Typ from Donors
 	inner join BloodGroups on BloodGroups.ID = Donors.BloodGroupID
+
+insert into Staff
+	values('66316', 'Mathias', 'Millberg', 'Konstig Titel')
+
+update Staff set PassWord = 'password'
+		
+select * from staff
+
+select * from donors

@@ -27,3 +27,14 @@ Create table BloodBank(
 	BloodGroupID int foreign key references BloodGroups(ID),
 	DonorID varchar(15) foreign key references Donors(ID),
 	StaffID varchar(15) foreign key references Staff(ID));
+
+go
+
+alter table BloodBank
+	add DateOfDonation DateTime default getdate();
+
+alter table staff
+	add PassWord varchar(50) not null
+
+alter table Donors
+	add PassWord varchar(50) not null
