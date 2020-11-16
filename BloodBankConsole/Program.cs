@@ -14,6 +14,10 @@ namespace Bloodbank
             string lastName = "Svensson"; //Console.ReadLine();
             string idnumber = "1234567";
             string email = "test@mail.com";
+            int availabletodonate = 1;
+            int healthOK = 1;
+            DateTime latestDonation = DateTime.Now;
+            
             BloodGroup bloodGroup = BloodGroup.O;
             User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
             bb.AddUser(newDonor);
