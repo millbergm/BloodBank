@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using Dapper;
+
 namespace Bloodbank
 {
     class DBRepository
@@ -11,70 +12,100 @@ namespace Bloodbank
         {
             this.ConnectionString = connectionString;
         }
-        public bool WriteUserToDB(User user)
+        public void WriteUserToDB(User user)
         {
-           try
+           for (int i = 0; i < 5; i++)
            {
-                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                try
                 {
-                    //TODO
-                    sqlConnection.Execute("INSERT nånting....");
+                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    {
+                        if (user.GetType() == typeof(BloodDonor))
+                        {
+                            sqlConnection.Execute("INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID,) VALUES (@user.firstname)", user);
+                        }
+                        else if (user.GetType() == typeof(Staff))
+                        {
+                            sqlConnection.Execute("INSERT INTO ()");
+                        }
+                        
+                    }
+                }
+                catch
+                {
+                    if (i == 5)
+                    {
+                        throw;
+                    }
                 }
            }
-           catch
-           {
-               
-               return false;
-           }
-            return true;
         }
-        public IEnumerable<User> CheckUserFromDB()
+        public IEnumerable<User> CheckUserFomDB()
         {
-            try
+            for (int i = 0; i < 5; i++)
             {
-                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-                //TODO
-                return sqlConnection.Query<User>("SELECT nånting....");
+                try
+                {
+                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    {
+                        //TODO
+                        return sqlConnection.Query<User>("SELECT nånting....");
+                    }
+                }
+                catch (System.Exception)
+                {
+                    if (i == 5)
+                    {
+                        throw;
+                    }
+                }
             }
-            }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
+            return null;
         }
         public IEnumerable<Donation> CheckAmountOfBlood()
         {
-            try
+            for (int i = 0; i < 5; i++)
             {
-                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                try
                 {
-                    //TODO
-                    return sqlConnection.Query<Donation>("SELECT nåt...");
+                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    {
+                        //TODO
+                        return sqlConnection.Query<Donation>("SELECT nåt...");
+                    }
+                }
+                catch (System.Exception)
+                {
+                    if (i == 5)
+                    {
+                        throw;
+                    }
                 }
             }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
+            return null;
         }
         public void WriteDonationToDB(Donation donation)
         {
-            try
+            for (int i = 0; i < 5; i++)
             {
-                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                try
                 {
-                    //TODO
-                    sqlConnection.Execute("INSERT::::");
+                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                    {
+                        //TODO
+                        sqlConnection.Execute("INSERT::::");
+                        continue;
+                    }
+                }
+                catch (System.Exception)
+                {
+                    if (i == 5)
+                    {
+                        throw;
+                    }
                 }
             }
-            catch (System.Exception)
-            {
-                
-                throw;
-            }
+            
         }
     }
 }

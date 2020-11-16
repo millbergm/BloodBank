@@ -6,7 +6,7 @@ namespace Bloodbank
     {
         public string Title { get; set; }
 
-        public Staff(string firstName, string lastName, long iDNumber, string title)
+        public Staff(string firstName, string lastName, string iDNumber, string title)
         {
             this.FirstName = firstName;
             this.LastName = lastName;

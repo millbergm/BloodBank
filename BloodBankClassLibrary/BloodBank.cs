@@ -4,11 +4,11 @@ namespace Bloodbank
 {
     public class Bloodbank
     {
-        void AddNewBloodDonor(string firstname, string lastname, long idnumber, string email, BloodGroup bloodgroup)
+        const string connectionString = "Server = 40.85.84.155; Database = OOPgroup2; User = Student10; Password = zombie-virus@2020;";
+        public void AddUser(User user)
         {
-            BloodDonor newDonor = new BloodDonor(firstname, lastname, idnumber, email, bloodgroup);
-            var db = new DBRepository("Server=server_address;Database=StudentXXX;User=StudentXXX;Password=your_secret_password;");
-            db.WriteUserToDB(newDonor);
+            var db = new DBRepository(connectionString);
+            db.WriteUserToDB(user);
         }
 
         // Login()
@@ -16,11 +16,10 @@ namespace Bloodbank
 
         // }
 
-        void AddDonation(BloodGroup bloodgroup, int amountOfBlood, long donorID, long staffID)
+        void AddDonation(Donation donation)
         {
-            Donation newDonation = new Donation (bloodgroup, amountOfBlood, donorID, staffID);
-            var db = new DBRepository("Server=server_address;Database=StudentXXX;User=StudentXXX;Password=your_secret_password;");
-            db.WriteDonationToDB(newDonation);
+            var db = new DBRepository(connectionString);
+            db.WriteDonationToDB(donation);
         }
 
         // List<Donation> StoredBlood()
