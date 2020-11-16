@@ -22,7 +22,7 @@ namespace Bloodbank
                     {
                         if (user.GetType() == typeof(BloodDonor))
                         {
-                            sqlConnection.Execute("INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID,) VALUES (@user.firstname)", user);
+                            sqlConnection.Execute("INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, LatestDonation, Email) VALUES (@user.IDNumber, @user.Firstname, @user.LastName, @user.AvailableToDonate, @user.HealthOK, @Bloodgroup)", user);
                         }
                         else if (user.GetType() == typeof(Staff))
                         {
@@ -40,7 +40,7 @@ namespace Bloodbank
                 }
            }
         }
-        public IEnumerable<User> CheckUserFomDB()
+        public IEnumerable<User> CheckUserFromDB()
         {
             for (int i = 0; i < 5; i++)
             {
