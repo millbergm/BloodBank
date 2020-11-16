@@ -1,37 +1,38 @@
 using System.Data.SqlClient;
+using Dapper;
 namespace Bloodbank
 {
-    class DBReopository
+    class DBRepository
     {
         private string ConnectionString { get; set; }
 
-        public DBReopository(string connectionString)
+        public DBRepository(string connectionString)
         {
             this.ConnectionString = connectionString;
         }
         public bool WriteUserToDB(User user)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-                try
+           try
+           {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
                 {
                     //TODO
                     sqlConnection.Execute("INSERT nånting....");
                 }
-                catch (System.Exception)
-                {
-                    
-                    throw;
-                }
-                
-            }
+           }
+           catch
+           {
+               
+               return false;
+           }
+            return true;
         }
-        public IEnumerable<User> CheckUserFoomDB()
+        public IEnumerable<User> CheckUserFomDB()
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 //TODO
-                sqlConnection.Query<User>("SELECT nånting....");
+                return sqlConnection.Query<User>("SELECT nånting....");
             }
         }
         public IEnumerable<Donation> CheckAmountOfBlood()
@@ -39,7 +40,7 @@ namespace Bloodbank
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 //TODO
-                sqlConnection.Query<Donation>("SELECT nåt...")
+                return sqlConnection.Query<Donation>("SELECT nåt...")
             }
         }
         public WriteDonationToDB()

@@ -2,11 +2,8 @@
 
 namespace Bloodbank
 {
-    class Staff : IUser
+    class Staff : User
     {
-        public string FirstName { get; set; }   
-        public string LastName { get; set; }    
-        public long IDNumber { get; set; }   
         public string Title { get; set; }
 
         public Staff(string firstName, string lastName, long iDNumber, string title)
