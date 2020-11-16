@@ -7,9 +7,9 @@ namespace Bloodbank
         public long DonorID { get; set; }
         public long StaffID { get; set; }
 
-        public Donation (BloodGroup bloodgroup, int amountOfBlood, long donorID, long staffID)
+        public Donation (BloodGroup bloodGroup, int amountOfBlood, long donorID, long staffID)
         {
-            this.Bloodgroup = bloodgroup;
+            this.Bloodgroup = bloodGroup;
             this.AmountOfBlood = amountOfBlood;
             this.DonorID = donorID;
             this.StaffID = staffID;

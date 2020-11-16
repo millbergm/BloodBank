@@ -10,15 +10,15 @@ namespace Bloodbank
         public BloodGroup BloodGroup { get; set; }
         public DateTime LatestDonation { get; set; }
 
-        public BloodDonor (string firstname, string lastname, string idnumber, string email, int availabletodonate, int healthOK, BloodGroup bloodgroup, DateTime latestDonation)
+        public BloodDonor (string firstName, string lastName, string idNumber, string eMail, int availableToDonate, int healthOK, BloodGroup bloodGroup, DateTime latestDonation)
         {
-            this.FirstName = firstname;
-            this.LastName = lastname;
-            this.IDNumber = idnumber;
-            this.Email = email;
-            this.AvailableToDonate = availabletodonate;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.IDNumber = idNumber;
+            this.Email = eMail;
+            this.AvailableToDonate = availableToDonate;
             this.HealthOK = healthOK;
-            this.BloodGroup = bloodgroup;
+            this.BloodGroup = bloodGroup;
             this.LatestDonation = latestDonation;
         }
 
