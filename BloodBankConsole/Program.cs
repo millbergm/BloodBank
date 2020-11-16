@@ -31,6 +31,27 @@ namespace Bloodbank
 
 
             Console.WriteLine(donor1);
-        }
+
+    // logga in
+    //  string name;
+    //         string password;
+    //         Console.WriteLine("Skriv in ditt användarnamn");
+    //         Console.Write(":> ");
+    //         name = Console.ReadLine();
+    //         Console.WriteLine("Skriv in ditt lösenord");
+    //         Console.Write(":> ");
+    //         password = Console.ReadLine();
+
+    //         //  ---Act
+    //         if (loginSystem.TryValidateUser(name, password))
+    //         {
+    //             Console.WriteLine("Inloggningen lyckades, välkommen!");
+    //         }
+    //         else
+    //         {
+    //             Console.WriteLine("Falaktigt användarnamn eller lösenord");
+    //         }
+
+    //     }
     }
 }
