@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using Dapper;
 namespace Bloodbank
@@ -27,25 +28,53 @@ namespace Bloodbank
            }
             return true;
         }
-        public IEnumerable<User> CheckUserFomDB()
+        public IEnumerable<User> CheckUserFromDB()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 //TODO
                 return sqlConnection.Query<User>("SELECT nånting....");
             }
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
         }
         public IEnumerable<Donation> CheckAmountOfBlood()
         {
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            try
             {
-                //TODO
-                return sqlConnection.Query<Donation>("SELECT nåt...")
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    //TODO
+                    return sqlConnection.Query<Donation>("SELECT nåt...");
+                }
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
             }
         }
-        public WriteDonationToDB()
+        public void WriteDonationToDB(Donation donation)
         {
-
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+                {
+                    //TODO
+                    sqlConnection.Execute("INSERT::::");
+                }
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
         }
     }
 }

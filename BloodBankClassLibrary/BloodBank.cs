@@ -20,7 +20,7 @@ namespace Bloodbank
         {
             Donation newDonation = new Donation (bloodgroup, amountOfBlood, donorID, staffID);
             var db = new DBRepository("Server=server_address;Database=StudentXXX;User=StudentXXX;Password=your_secret_password;");
-            db.
+            db.WriteDonationToDB(newDonation);
         }
 
         // List<Donation> StoredBlood()
