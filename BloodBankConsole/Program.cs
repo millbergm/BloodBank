@@ -86,15 +86,35 @@ namespace Bloodbank
                 Console.WriteLine($"{item.AmountOfBlood} Enheter : Blodgrupp {item.Bloodgroup}");
             }
 
+             foreach (var item in bb.GetAllUsers())
+            {
+                Console.WriteLine($"AnvändarID: {item.IDNumber} Password: {item.PassWord}");
+            }
+
                 // Information för att STAFF ska skicka mail om förfrågan av blod
             //int bloodgroup = 2;
-            BloodGroup bloodgroup = BloodGroup.A;
-            foreach (var item in bb.GetListForRequestDonation(bloodgroup))
-            {
-                Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp:{bloodgroup}");
-            }
+            // BloodGroup bloodgroup = BloodGroup.A;
+            // foreach (var item in bb.GetListForRequestDonation(bloodgroup))
+            // {
+            //     Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp:{bloodgroup}");
+            // }
         }
 
         
+    private static void WelcomePageBloodBank()
+    {
+            Console.WriteLine("-------------------------------");
+            Console.WriteLine("--- Välommen till Blodbanken---");
+            Console.WriteLine("---            :)           ---");
+        }
+    private static void StartPageOption()
+    {
+            Console.WriteLine($"");
+            Console.WriteLine($"A : Logga in");
+            Console.WriteLine($"B : Registrera ny användare");
+        }
+        
+
+
     }
 }

@@ -12,15 +12,15 @@ namespace Bloodbank
             db.WriteUserToDB(user);
         }
 
-        public bool ValidateUserLogin(string userID, string password)
-        {            
-            int auth = Convert.ToInt32(db.CheckUserLogin(userID, password));
-            if (auth == 1 || auth == 2)
-            {
-                return true;
-            }
-            return false;
-        }
+        // public bool ValidateUserLogin(string userID, string password)
+        // {            
+        //     int auth = Convert.ToInt32(db.CheckUserLogin(userID, password));
+        //     if (auth == 1 || auth == 2)
+        //     {
+        //         return true;
+        //     }
+        //     return false;
+        // }
 
         public void AddDonation(Donation donation)
         {           
@@ -45,6 +45,16 @@ namespace Bloodbank
                 requestDonation.Add(donor);
             }
             return requestDonation;
+        }
+
+        public List<User> GetAllUsers()
+        {
+            List<User> allUsers = new List<User>();            
+            foreach (var user in db.GetUserLogin())
+            {
+                allUsers.Add(user);
+            }
+            return allUsers;
         }
     }
 }

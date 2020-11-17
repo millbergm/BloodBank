@@ -15,6 +15,16 @@ END
 
 go
 
+create or alter procedure GetUserLogin2
+as
+begin
+select Donors.IDNumber as IDNumber, Donors.PassWord as PassWord from Donors
+	union
+select Staff.ID as IDNumber, Staff.PassWord as PassWord from Staff
+end
+
+go
+
 create or alter procedure RequestDonation(@bloodgroup int)
 as
 begin
