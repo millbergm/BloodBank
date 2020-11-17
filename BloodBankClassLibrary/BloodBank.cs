@@ -26,22 +26,25 @@ namespace Bloodbank
         {           
             db.WriteDonationToDB(donation);
         }
+
         public List<Donation> StoredBlood()
         {
-            List<Donation> StoredBlood = new List<Donation>();            
+            List<Donation> storedBlood = new List<Donation>();            
             foreach (var donation in db.CheckAmountOfBlood())
             {
-                
-                StoredBlood.Add(donation);
-                
-
+                storedBlood.Add(donation);
             }
-            return StoredBlood;
+            return storedBlood;
         }
 
-        // List<> RequestDonation()
-        // {
-
-        // }
+        public List<BloodDonor> GetListForRequestDonation(BloodGroup bloodgroup)
+        {
+            List<BloodDonor> requestDonation = new List<BloodDonor>();            
+            foreach (var donor in db.RequestDonations(bloodgroup))
+            {
+                requestDonation.Add(donor);
+            }
+            return requestDonation;
+        }
     }
 }

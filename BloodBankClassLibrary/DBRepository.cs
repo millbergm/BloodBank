@@ -42,7 +42,7 @@ namespace Bloodbank
                 return sqlConnection.Query<User>("EXEC GetDonor");
             }
         }
-        public IEnumerable<Donation> CheckAmountOfBlood()
+        public IEnumerable<Donation> CheckAmountOfBlood()   //funkar
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
@@ -57,18 +57,18 @@ namespace Bloodbank
                 sqlConnection.Execute("EXEC AddDonation @AmountOfBlood, @DonorID, @StaffID", donation);
             }
         }
-        public IEnumerable<string> RequestDonations(BloodGroup bloodgroup)
+        public IEnumerable<BloodDonor> RequestDonations(BloodGroup bloodgroup)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                return sqlConnection.Query<string>("EXEC RequestDonation @bloodgroup;", bloodgroup);
+                return sqlConnection.Query<BloodDonor>("EXEC RequestDonation @bloodgroup;", bloodgroup);
             }
         }
         public IEnumerable<int> CheckUserLogin(string userID, string password)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                return sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;", (userID, password));
+                return sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;", new {userID, password});
                 // 0 = does not exist, 1 = donor, 2 = staff
 
             }
