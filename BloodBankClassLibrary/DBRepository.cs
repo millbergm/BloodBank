@@ -60,18 +60,17 @@ namespace Bloodbank
         public IEnumerable<BloodDonor> RequestDonations(BloodGroup bloodgroup)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
+            {                
                 return sqlConnection.Query<BloodDonor>("EXEC RequestDonation @bloodgroup;", bloodgroup);
             }
-        }
+        }  
+                
         public IEnumerable<int> CheckUserLogin(string userID, string password)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                return sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;", new {userID, password});
-                // query return, 0 = does not exist, 1 = donor, 2 = staff
-
+                List<Staff> userLoggedin = new List<Staff>();
+                userLoggedin.Add(sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;", new Staff{ @idnumber = userID, @password = password});
+                return userLoggedin;
             }
-        }
-    }
 }

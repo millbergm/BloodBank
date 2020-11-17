@@ -4,3 +4,4 @@
 4. Är du gravid?
 5. Har du varit utomlands i vissa länder?
 6. Har du utsatts för blodburen smitta?
+7. Har du tattuerat dig de senaste 6 månaderna
