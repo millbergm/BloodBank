@@ -32,23 +32,23 @@ namespace Bloodbank
         public IEnumerable<User> GetUserFromDB(object o)
         {
             int loginStatus = Convert.ToInt32(o);
-                if (loginStatus == 1)
-                {
-                    ///////////////////////////////////
-                }
-                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-                    {
-                        //TODO/////////////////////////////////////////////////////////////////////////////////////////
-                        return sqlConnection.Query<User>("EXEC GetDonor");
-                    }
+            if (loginStatus == 1)
+            {
+                ///////////////////////////////////
+            }
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                //TODO/////////////////////////////////////////////////////////////////////////////////////////
+                return sqlConnection.Query<User>("EXEC GetDonor");
+            }
         }
         public IEnumerable<Donation> CheckAmountOfBlood()
         {
-                    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-                    {
-                        //TODO
-                        return sqlConnection.Query<Donation>("SELECT nåt...");
-                    }
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                //TODO
+                return sqlConnection.Query<Donation>("EXEC CheckBloodBank");
+            }
         }
         public void WriteDonationToDB(Donation donation)
         {
@@ -70,7 +70,7 @@ namespace Bloodbank
             {
                 return sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;", (userID, password));
                 // 0 = does not exist, 1 = donor, 2 = staff
-                
+
             }
         }
     }
