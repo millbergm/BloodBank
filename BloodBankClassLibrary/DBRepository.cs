@@ -57,11 +57,11 @@ namespace Bloodbank
                 sqlConnection.Execute("EXEC AddDonation @AmountOfBlood, @DonorID, @StaffID", donation);
             }
         }
-        public IEnumerable<BloodDonor> RequestDonations(BloodGroup bloodgroup)
+        public IEnumerable<BloodDonor> RequestDonations(int bloodgroup)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {                
-                return sqlConnection.Query<BloodDonor>("EXEC RequestDonation @bloodgroup;", bloodgroup);
+                return sqlConnection.Query<BloodDonor>($"EXEC RequestDonation {bloodgroup}");
             }
         }  
                 

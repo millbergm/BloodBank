@@ -25,7 +25,7 @@ end
 
 go
 
-create or alter procedure RequestDonation(@bloodgroup int)
+create or alter procedure RequestDonation @bloodgroup int
 as
 begin
 select FirstName, Email, BloodGroupID as BloodGroup from donors
