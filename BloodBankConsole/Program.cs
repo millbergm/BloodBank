@@ -52,7 +52,7 @@ namespace Bloodbank
             //     Console.WriteLine("Nu gick det lite fel!");
             // }
 
-            Console.ReadLine();
+            //Console.ReadLine();
 
             // int amountOfBlood = 3;
             // string donorID = idnumber;
@@ -79,6 +79,10 @@ namespace Bloodbank
             {
                 Console.WriteLine("Du är INTE inloggad!");
             }
+
+
+            Console.WriteLine();
+            bb.StoredBlood();
 
 
 

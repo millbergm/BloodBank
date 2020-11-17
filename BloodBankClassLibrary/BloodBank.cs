@@ -29,10 +29,11 @@ namespace Bloodbank
             db.WriteDonationToDB(donation);
         }
 
-        // List<Donation> StoredBlood()
-        // {
-
-        // }
+        List<Donation> StoredBlood()
+        {
+            var db = new DBRepository(connectionString);
+            db.CheckAmountOfBlood();
+        }
 
         public void FileBloodDonation()
         {
