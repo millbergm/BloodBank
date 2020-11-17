@@ -65,16 +65,15 @@ namespace Bloodbank
             }
         }  
                 
-        // public IEnumerable<BloodDonor> CheckUserLogin(string userID, string password)
-        // {
-        //     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-        //     {
-        //         List<BloodDonor> userLoggedin = new List<BloodDonor>();
-        //         userLoggedin.Add(sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;")); //new BloodDonor{IDNumber = @idnumber, @password = password})); //????
-        //         return userLoggedin;
-        //     }
-        // }
-
+        public IEnumerable<int> CheckUserLogin(string userID, string password)
+        {
+            using (SqlConnection sqlConnection1 = new SqlConnection(ConnectionString))
+            {
+                return sqlConnection1.Query<int>($"EXEC GetUserLogin {userID}, {password};");
+                
+            }
+        }
+        
         public IEnumerable<User> GetUserLogin()  
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))

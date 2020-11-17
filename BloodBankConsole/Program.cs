@@ -91,12 +91,13 @@ namespace Bloodbank
                 Console.WriteLine($"AnvändarID: {item.IDNumber} Password: {item.PassWord}");
             }
 
+            PrintBloodGroupMeny();
             //Information för att STAFF ska skicka mail om förfrågan av blod
-            int bloodgroup = 2;
-            //BloodGroup bloodgroup = BloodGroup.A;
+            int bloodgroup = 1;
+            BloodGroup type = (BloodGroup)bloodgroup;
             foreach (var item in bb.GetListForRequestDonation(bloodgroup))
             {
-                Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp:{bloodgroup}");
+                Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp: {type}");
             }
         }
 
@@ -125,48 +126,54 @@ namespace Bloodbank
             Console.WriteLine($"keyRequestBloodDonation : Skicka ut mail med förfrågan om att donera blod");
             Console.WriteLine($"keyQuit : Avsluta");
         }
-          private static string ReadLineAsString(string printString)
-    {
-        string output = "";
-        string input = "";
-        bool success = false;
-
-        do
+        private static void PrintBloodGroupMeny()
         {
-            Console.Write(printString);
-            input = Console.ReadLine();
-            if (!String.IsNullOrEmpty(input)) success = true;
-            else Console.WriteLine("Hoppsan! Du skrev inte in något.");
-        } while (!success);
-
-
-        return output = input;
-    }
-     private static int ReadLineAsInt(string printString, int maxValue = -1)
-    {
-        int output = -1;
-        bool success = false;
-
-
-        do
+            foreach (int menuChoiceNumber in Enum.GetValues(typeof(BloodGroup)))
+            {
+                Console.WriteLine("{0}. {1}", menuChoiceNumber, Enum.GetName(typeof(BloodGroup), menuChoiceNumber));
+            }
+        }
+        private static string ReadLineAsString(string printString)
         {
-            Console.Write(printString);
-            string input = Console.ReadLine();
-            try
-            {
-                output = Convert.ToInt32(input);
-                if ((maxValue == -1 || output <= maxValue) && output >= 0) success = true;
-                else Console.WriteLine("Skriv en siffra mellan 1 - " + maxValue);
-            }
-            catch
-            {
-                Console.WriteLine("Du skrev inte in en siffra eller ett alldelles för stort tal. Försök igen, skriv in en siffra.");
-            }
-        } while (!success);
+            string output = "";
+            string input = "";
+            bool success = false;
 
+            do
+            {
+                Console.Write(printString);
+                input = Console.ReadLine();
+                if (!String.IsNullOrEmpty(input)) success = true;
+                else Console.WriteLine("Hoppsan! Du skrev inte in något.");
+            } while (!success);
 
-        return output;
-    }
+            return output = input;
+        }
+
+        //Se över siffrorna i metoden nedan sen !
+        private static int ReadLineAsInt(string printString, int maxValue)
+        {
+            int output = -1;
+            bool success = false;
+
+            do
+            {
+                Console.Write(printString);
+                string input = Console.ReadLine();
+                try
+                {
+                    output = Convert.ToInt32(input);
+                    if ((maxValue == 0 || output <= maxValue) && output >= 0) success = true;
+                    else Console.WriteLine("Skriv en siffra mellan 1 - " + maxValue);
+                }
+                catch
+                {
+                    Console.WriteLine("Du skrev inte in en siffra eller ett alldelles för stort tal. Försök igen, skriv in en siffra.");
+                }
+            } while (!success);
+
+            return output;
+        }
 
 
     }

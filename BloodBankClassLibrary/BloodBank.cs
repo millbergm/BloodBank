@@ -12,15 +12,20 @@ namespace Bloodbank
             db.WriteUserToDB(user);
         }
 
-        // public bool ValidateUserLogin(string userID, string password)
-        // {            
-        //     int auth = Convert.ToInt32(db.CheckUserLogin(userID, password));
-        //     if (auth == 1 || auth == 2)
-        //     {
-        //         return true;
-        //     }
-        //     return false;
-        // }
+        public bool ValidateUserLogin(string userID, string password)
+        {            
+            IEnumerable<int> checkedAuth = db.CheckUserLogin(userID, password);
+            foreach (var item in checkedAuth)
+            {
+                int auth = Convert.ToInt32(item);
+                if (auth == 1 || auth == 2)
+                {
+                    return true;
+                }   
+            }
+            
+            return false;
+        }
 
         public void AddDonation(Donation donation)
         {           
