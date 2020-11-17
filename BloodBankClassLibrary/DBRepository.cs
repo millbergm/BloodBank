@@ -23,7 +23,9 @@ namespace Bloodbank
                     {
                         if (user.GetType() == typeof(BloodDonor))
                         {
-                            sqlConnection.Execute("EXEC AddDonor (@IDNumber, @Firstname, @LastName, @AvailableToDonate, @HealthOK, @Bloodgroup, @Email)", user);
+                            sqlConnection.Execute("EXEC AddDonor @IDNumber, @Firstname, @LastName, @AvailableToDonate, @HealthOK, @Bloodgroup, @Email, '';", user);
+                            //sqlConnection.Execute("INSERT INTO Donors (IDNumber, BloodGroupID) VALUES (@IDNumber, @BloodGroup);", user);
+                            break;
                         }
                         else if (user.GetType() == typeof(Staff))
                         {

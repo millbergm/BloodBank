@@ -1,6 +1,6 @@
 namespace Bloodbank
 {
-    class Donation
+    public class Donation
     {
         public BloodGroup Bloodgroup { get; set; }
         public int AmountOfBlood { get; set; }

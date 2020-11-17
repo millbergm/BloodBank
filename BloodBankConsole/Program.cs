@@ -24,27 +24,38 @@ namespace Bloodbank
             Console.ReadLine();
 
 
-            
 
-    // logga in
-    //         string name;
-    //         string password;
-    //         Console.WriteLine("Skriv in ditt användarnamn");
-    //         Console.Write(":> ");
-    //         name = Console.ReadLine();
-    //         Console.WriteLine("Skriv in ditt lösenord");
-    //         Console.Write(":> ");
-    //         password = Console.ReadLine();
+            // bloodGroup = BloodGroup.A;
+            // int amountOfBlood = 5;
+            // long donorID = idnumber; //?
+            // long StaffID = 123321;
+            // Donation donation = new Donation(bloodGroup, amountOfBlood, donorID, staffID);
+            // bb.AddDonation(donation);
 
-    //         //  ---Act
-    //         if (TryValidateUser(name, password))
-    //         {
-    //             Console.WriteLine("Inloggningen lyckades, välkommen!");
-    //         }
-    //         else
-    //         {
-    //             Console.WriteLine("Falaktigt användarnamn eller lösenord");
-    //         }
+
+
+
+
+
+            // logga in
+            //         string name;
+            //         string password;
+            //         Console.WriteLine("Skriv in ditt användarnamn");
+            //         Console.Write(":> ");
+            //         name = Console.ReadLine();
+            //         Console.WriteLine("Skriv in ditt lösenord");
+            //         Console.Write(":> ");
+            //         password = Console.ReadLine();
+
+            //         //  ---Act
+            //         if (TryValidateUser(name, password))
+            //         {
+            //             Console.WriteLine("Inloggningen lyckades, välkommen!");
+            //         }
+            //         else
+            //         {
+            //             Console.WriteLine("Falaktigt användarnamn eller lösenord");
+            //         }
 
         }
     }
