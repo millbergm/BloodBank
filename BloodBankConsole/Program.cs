@@ -21,6 +21,7 @@ namespace Bloodbank
             BloodGroup bloodGroup = BloodGroup.O;
             User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
             bb.AddUser(newDonor);
+            Console.ReadLine();
 
 
             

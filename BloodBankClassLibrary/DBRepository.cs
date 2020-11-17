@@ -23,7 +23,7 @@ namespace Bloodbank
                     {
                         if (user.GetType() == typeof(BloodDonor))
                         {
-                            sqlConnection.Execute("EXEC AddDonor (IDNumber, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, Email) VALUES (@user.IDNumber, @user.Firstname, @user.LastName, @user.AvailableToDonate, @user.HealthOK, @Bloodgroup, @Email)", user);
+                            sqlConnection.Execute("EXEC AddDonor (@IDNumber, @Firstname, @LastName, @AvailableToDonate, @HealthOK, @Bloodgroup, @Email)", user);
                         }
                         else if (user.GetType() == typeof(Staff))
                         {
@@ -32,11 +32,11 @@ namespace Bloodbank
                         
                     }
                 }
-                catch
+                catch (SqlException e)
                 {
-                    if (i == 5)
+                    if (i == 4)
                     {
-                        throw;
+                        Console.WriteLine(e);               
                     }
                 }
            }
@@ -61,7 +61,7 @@ namespace Bloodbank
                 }
                 catch (System.Exception)
                 {
-                    if (i == 5)
+                    if (i == 4)
                     {
                         throw;
                     }
@@ -83,7 +83,7 @@ namespace Bloodbank
                 }
                 catch (System.Exception)
                 {
-                    if (i == 5)
+                    if (i == 4)
                     {
                         throw;
                     }
@@ -105,7 +105,7 @@ namespace Bloodbank
                 }
                 catch (System.Exception)
                 {
-                    if (i == 5)
+                    if (i == 4)
                     {
                         throw;
                     }
@@ -125,7 +125,7 @@ namespace Bloodbank
                 }
                 catch (System.Exception)
                 {
-                    if (i == 5)
+                    if (i == 4)
                     {
                         throw;
                     }
@@ -148,7 +148,7 @@ namespace Bloodbank
                 }
                 catch (System.Exception)
                 {
-                    if (i == 5)
+                    if (i == 4)
                     {
                         throw;
                     }
