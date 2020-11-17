@@ -2,7 +2,7 @@
 
 namespace Bloodbank
 {
-    class Staff : User
+    public class Staff : User
     {
         public string Title { get; set; }
 

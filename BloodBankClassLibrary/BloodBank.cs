@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 namespace Bloodbank
 {
@@ -11,12 +12,18 @@ namespace Bloodbank
             db.WriteUserToDB(user);
         }
 
-        // Login()
-        // {
+        public bool ValidateUserLogin(string userID, string password)
+        {
+                var db = new DBRepository(connectionString);
+                int auth = Convert.ToInt32(db.CheckUserLogin(userID, password));
+                   if (auth == 1 || auth == 2)
+                   {
+                        return true; 
+                   }                
+                    return false;   
+        }
 
-        // }
-
-        void AddDonation(Donation donation)
+        public void AddDonation(Donation donation)
         {
             var db = new DBRepository(connectionString);
             db.WriteDonationToDB(donation);
@@ -27,7 +34,7 @@ namespace Bloodbank
 
         // }
 
-        void FileBloodDonation()
+        public void FileBloodDonation()
         {
 
         }

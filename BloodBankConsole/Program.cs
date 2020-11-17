@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 
 namespace Bloodbank
 {
@@ -6,6 +7,7 @@ namespace Bloodbank
     {
         static void Main(string[] args)
         {
+            Console.Clear();
             Bloodbank bb = new Bloodbank();
 
             Console.Write("First name: ");
@@ -20,17 +22,63 @@ namespace Bloodbank
             
             BloodGroup bloodGroup = BloodGroup.O;
             User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
-            bb.AddUser(newDonor);
+            try
+            {
+                bb.AddUser(newDonor);
+            }
+            catch (SqlException)
+            {
+                //Console.WriteLine(e);
+                Console.WriteLine("Nu gick det lite fel !");
+            }
+            
+            // Console.ReadLine();
+
+            // Console.WriteLine("Enter staff first name:");
+            // string staffFirstName = Console.ReadLine();
+            // Console.WriteLine("Enter staff last name:");
+            // string staffLastName = Console.ReadLine();
+            // string staffiDNumber = "787878";
+            // string staffTitle = "Supervisor";
+
+            // User newStaff = new Staff(firstName, lastName, staffiDNumber, staffTitle);
+            // try
+            // {
+            //     bb.AddUser(newStaff);
+            // }
+            // catch (SqlException)
+            // {
+            //     //Console.WriteLine(e);
+            //     Console.WriteLine("Nu gick det lite fel!");
+            // }
+
             Console.ReadLine();
 
+            // int amountOfBlood = 3;
+            // string donorID = idnumber;
+            // string staffID = "66316"; //fylls i automatiskt via inloggningen
+            // Donation donation = new Donation(amountOfBlood, donorID, staffID);
+            // try
+            // {
+            //     bb.AddDonation(donation);
+            // }
+            // catch (SqlException e)
+            // {
+            //     Console.WriteLine(e);
+            //     Console.WriteLine("Nu gick det lite fel med donationen!");
+            // }
 
-
-            // bloodGroup = BloodGroup.A;
-            // int amountOfBlood = 5;
-            // long donorID = idnumber; //?
-            // long StaffID = 123321;
-            // Donation donation = new Donation(bloodGroup, amountOfBlood, donorID, staffID);
-            // bb.AddDonation(donation);
+            string userID = "66316";
+            string password = "password";
+            if (bb.ValidateUserLogin(userID, password))
+            {
+                //bb.SetActiveUserAccount();
+                Console.WriteLine("Du är inloggad!");
+            }
+            else
+            {
+                Console.WriteLine("Du är INTE inloggad!");
+            }
 
 
 
