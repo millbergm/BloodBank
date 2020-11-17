@@ -69,7 +69,7 @@ namespace Bloodbank
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 return sqlConnection.Query<int>("EXEC GetUserLogin @idnumber, @password;", new {userID, password});
-                // 0 = does not exist, 1 = donor, 2 = staff
+                // query return, 0 = does not exist, 1 = donor, 2 = staff
 
             }
         }

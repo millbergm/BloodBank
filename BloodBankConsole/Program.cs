@@ -87,9 +87,10 @@ namespace Bloodbank
             }
 
                 // Information för att STAFF ska skicka mail om förfrågan av blod
-            foreach (var item in bb.GetListForRequestDonation(BloodGroup.A))
+            BloodGroup bloodgroup = BloodGroup.A;
+            foreach (var item in bb.GetListForRequestDonation(bloodgroup))
             {
-                Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp:{BloodGroup.A}");
+                Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp:{bloodgroup}");
             }
         }
 

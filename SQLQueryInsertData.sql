@@ -19,3 +19,10 @@ update Staff set PassWord = 'password'
 select * from staff
 
 select * from donors
+
+delete from Donors
+where IDNumber = '1234567'
+
+select * from BloodBank
+
+exec RequestDonation 1

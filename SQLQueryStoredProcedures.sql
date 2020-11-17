@@ -2,15 +2,15 @@ create or alter procedure GetUserLogin(@idnumber varchar(50), @password varchar(
 as
 declare @value int = 0
 begin
-if exists (select Donors.ID from Donors where Donors.ID = @idnumber and Donors.PassWord = @password)
+if exists (select Donors.IDNumber from Donors where Donors.IDNumber = @idnumber and Donors.PassWord = @password)
 begin
 	set @value = 1
 end
-if exists (select * from staff where Staff.FirstName = @idnumber and Staff.PassWord = @password)
+if exists (select * from staff where Staff.ID = @idnumber and Staff.PassWord = @password)
 begin
 	set @value = 2
 end
-	return @value
+	select @value
 END
 
 go
@@ -18,25 +18,25 @@ go
 create or alter procedure RequestDonation(@bloodgroup int)
 as
 begin
-select FirstName, Email, BloodGroups.Typ from donors
-	inner join BloodGroups on BloodGroups.ID = Donors.BloodGroupID
-	where BloodGroups.ID = @bloodgroup
+select FirstName, Email, BloodGroupID as BloodGroup from donors
+	--inner join BloodGroups on BloodGroups.ID = Donors.BloodGroupID
+	where BloodGroupID = @bloodgroup and HealthOK = 1 and AvailableToDonate = 1
 end
 
 go
 
 create or alter procedure AddDonor(
 	@idnumber varchar(50),
-	@firstname varchar(50),
-	@lastname varchar(50),
-	@availabletodonate bit,
-	@healthok bit,
+	@firstname varchar(50) null,
+	@lastname varchar(50) null,
+	@availabletodonate bit null,
+	@healthok bit null ,
 	@bloodgroupid int,
-	@email varchar(50),
-	@password varchar(50))
+	@email varchar(50) null,
+	@password varchar(50) null)
 as
 begin
-INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, Email, PassWord) 
+INSERT INTO Donors (IDNumber, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, Email, PassWord) 
 	VALUES (@idnumber, @firstname, @lastname, @availabletodonate, @healthok, @bloodgroupid, @email, @password)
 end
 
@@ -47,7 +47,7 @@ create or alter procedure AddStaff(
 	@firstname varchar(50),
 	@lastname varchar(50),
 	@title varchar(50),
-	@password varchar(50))
+	@password varchar(50) null)
 as
 begin
 INSERT INTO Staff (ID, FirstName, LastName, Title, PassWord) 
@@ -58,16 +58,16 @@ go
 
 create or alter procedure AddDonation(
 	@amountofblood int,
-	@bloodgroupid int,
 	@donorid varchar(50),
 	@staffid varchar(50))
 as
+declare @bloodgroupid int = (Select Donors.BloodGroupID From Donors where Donors.IDNumber = @donorid)
 begin
 insert into BloodBank(AmountOfBlood, BloodGroupID, DonorID, StaffID)
 	values(@amountofblood, @bloodgroupid, @donorid, @staffid)
 update Donors
 	set LatestDonation = getdate()
-	where donors.id = @donorid
+	where donors.IDNumber = @donorid
 end
 
 go
@@ -75,5 +75,14 @@ go
 create or alter procedure GetDonor(@idnumber varchar(50))
 as
 begin
-select Donors.FirstName, Donors.LastName, Donors.ID, Donors.Email, Donors.AvailableToDonate, Donors.HealthOK, Donors.BloodGroupID, Donors.LatestDonation from Donors	
+select Donors.FirstName, Donors.LastName, Donors.IDNumber, Donors.Email, Donors.AvailableToDonate, Donors.HealthOK, Donors.BloodGroupID, Donors.LatestDonation from Donors	
+end
+
+go
+
+create or alter procedure CheckBloodBank
+as
+begin
+select sum(BloodBank.AmountOfBlood) as AmountOfBlood, BloodBank.BloodGroupID as Bloodgroup from BloodBank
+group by BloodBank.BloodGroupID
 end
