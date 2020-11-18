@@ -29,11 +29,11 @@ namespace Bloodbank
             }
         }
 
-        public IEnumerable<User> GetUserFromDB(string idNumber)
+        public IEnumerable<Object> GetUserFromDB(string idNumber)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                return sqlConnection.Query<User>($"EXEC GetUserInfo {idNumber}");
+                return sqlConnection.Query<Object>($"EXEC GetUserInfo {idNumber}");
             }
         }
         public IEnumerable<Donation> CheckAmountOfBlood()   //funkar

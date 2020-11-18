@@ -24,15 +24,15 @@ namespace Bloodbank
             return 0;
         }
 
-        public IEnumerable<BloodDonor>  GetActiveBloodDonor(string userID)
+        public IEnumerable<Object>  GetActiveUser(string userID)
         {
             return db.GetUserFromDB(userID);
         }
 
-        public IEnumerable<Staff>  GetActiveStaff(string userID)
+       /* public IEnumerable<Object>  GetActiveStaff(string userID)
         {
             return db.GetUserFromDB(userID);
-        }
+        }*/
 
         public void AddDonation(Donation donation)
         {           

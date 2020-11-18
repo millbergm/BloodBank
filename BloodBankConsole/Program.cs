@@ -28,20 +28,27 @@ namespace Bloodbank
                     case keyLoggin:
                     {
                         Console.Clear();
-                        Console.WriteLine("Skriv in ditt användar ID:");
+                        Console.WriteLine("Skriv in ditt användar-ID:");
+                        
                         string inputUserID = ReadLineAsString(":>");
+                        if (IsDigitsOnly(inputUserID) == false)
+                        {
+                            Console.Writeline("Du angav ett ID av fel format.")
+                            PauseProgram();
+                            break;
+                        }
                         Console.WriteLine("Skriv in ditt lösenord:");
                         string inputPassword = ReadLineAsString(":>");
 
                         if(bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
                         {
-                                bb.GetActiveBloodDonor(inputUserID);
+                                bb.GetActiveUser(inputUserID);
                                 Console.WriteLine("Du är inloggad som donator");
                                 PauseProgram();
                         }
                         else if(bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
                         {
-                                bb.GetActiveStaff(inputUserID);
+                                bb.GetActiveUser(inputUserID);
                                 Console.WriteLine("Du är inloggad som personal");
                                 PauseProgram();
                         }
@@ -55,6 +62,15 @@ namespace Bloodbank
                     }
                     case keyCreateAccount:
                     {
+                        // Konto för donator
+                        // metod med fråge formulär där "rätt svar" sätter HelthOK till true
+                        Console.WriteLine("Skriv in ett användar ID, 12 siffror:");
+                        Consoel.WriteLine("Skriv in förnamn: ");
+                        Consoel.WriteLine("Skriv in efternamn: ");
+                        Consoel.WriteLine("ÄR du tillgänglig för att donera blod?: ");
+                        Consoel.WriteLine("Vilken blodgrupp tillhör du: ");
+                        Consoel.WriteLine("Skriv in din email: ");
+                        Consoel.WriteLine("Välj ett lösenord: ");
                         //Donator: userID, Förnamn, efternamn, tillgänglig för donation, hälsa ok, blodgrupp, email, lösenord
                         //AddUser();
                         break;
@@ -201,7 +217,7 @@ namespace Bloodbank
             {
                 Console.Write(printString);
                 input = Console.ReadLine();
-                if (!String.IsNullOrEmpty(input)) success = true;
+                if (!String.IsNullOrWhitespace(input)) success = true;
                 else Console.WriteLine("Hoppsan! Du skrev inte in något.");
             } while (!success);
 
@@ -240,6 +256,14 @@ namespace Bloodbank
             Console.Clear();
         }
 
-
+        static bool IsDigitsOnly(string str)
+        {
+        foreach (char c in str)
+        {
+            if (c < '0' || c > '9')
+            return false;
+        }
+        return true;
+        }
     }
 }

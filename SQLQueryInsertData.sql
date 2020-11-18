@@ -12,9 +12,10 @@ select donors.id, firstname, LastName, BloodGroups.Typ from Donors
 	inner join BloodGroups on BloodGroups.ID = Donors.BloodGroupID
 
 insert into Staff
-	values('66316', 'Mathias', 'Millberg', 'Konstig Titel')
+	values('995-00', 'Marcus', 'Millberg', 'Konstig Titel', 'password')
 
-update Staff set PassWord = 'password'
+update Staff set id = '995-00'
+where ID = '099500'
 		
 select * from staff
 
@@ -26,3 +27,12 @@ where IDNumber = '1234567'
 select * from BloodBank
 
 exec RequestDonation 1
+
+update Donors set PassWord = 'password'
+
+delete from Staff
+where ID = '995-00'
+
+update Donors
+set IDNumber = '199010195261'
+where IDNumber = '19901019-5261'

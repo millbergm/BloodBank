@@ -29,7 +29,6 @@ create or alter procedure RequestDonation @bloodgroup int
 as
 begin
 select FirstName, Email, BloodGroupID as BloodGroup from donors
-	--inner join BloodGroups on BloodGroups.ID = Donors.BloodGroupID
 	where BloodGroupID = @bloodgroup and HealthOK = 1 and AvailableToDonate = 1
 end
 
