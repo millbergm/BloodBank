@@ -68,17 +68,17 @@ namespace Bloodbank
             //     Console.WriteLine("Nu gick det lite fel med donationen!");
             // }
 
-            // string userID = "66316";
-            // string password = "password";
-            // if (bb.ValidateUserLogin(userID, password))
-            // {
-            //     //bb.SetActiveUserAccount();
-            //     Console.WriteLine("Du är inloggad!");
-            // }
-            // else
-            // {
-            //     Console.WriteLine("Du är INTE inloggad!");
-            // }
+            string userID = "66316";
+            string password = "password";
+            if (bb.ValidateUserLogin(userID, password))
+            {
+                //bb.SetActiveUserAccount();
+                Console.WriteLine("Du är inloggad!");
+            }
+            else
+            {
+                Console.WriteLine("Du är INTE inloggad!");
+            }
 
             // Skriv ut mängden blod / blodgrupp via storeprocedure
             foreach (var item in bb.StoredBlood())
