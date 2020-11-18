@@ -13,21 +13,23 @@ namespace Bloodbank
             db.WriteUserToDB(user);
         }
 
-        public bool ValidateUserLogin(string userID, string password)
+        public int ValidateUserLogin(string userID, string password)
         {            
             IEnumerable<int> checkedAuth = db.CheckUserLogin(userID, password);
             foreach (var item in checkedAuth)
             {
                 int auth = Convert.ToInt32(item);
-                if (auth == 1 || auth == 2)
-                {
-                    return true;
-                }   
+                return auth;
             }
-            return false;
+            return 0;
         }
 
-        public IEnumerable<User>  GetActiveUser(string userID)
+        public IEnumerable<BloodDonor>  GetActiveBloodDonor(string userID)
+        {
+            return db.GetUserFromDB(userID);
+        }
+
+        public IEnumerable<Staff>  GetActiveStaff(string userID)
         {
             return db.GetUserFromDB(userID);
         }

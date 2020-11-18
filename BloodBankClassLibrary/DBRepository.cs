@@ -33,7 +33,7 @@ namespace Bloodbank
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                return sqlConnection.Query<User>("EXEC GetUserInfo @idnumber", idNumber);
+                return sqlConnection.Query<User>($"EXEC GetUserInfo {idNumber}");
             }
         }
         public IEnumerable<Donation> CheckAmountOfBlood()   //funkar

@@ -19,28 +19,43 @@ namespace Bloodbank
             Bloodbank bb = new Bloodbank();
 
             PrintWelcomePageBloodBank();
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             while (isRunning)
             {
-                PrintStartMenyOption();
+                PrintStartMenuOption();
                 switch (Console.ReadKey().Key)
                 {
                     case keyLoggin:
                     {
-                            Console.WriteLine("Skriv in ditt användar ID:");
-                            string inputUserID = ReadLineAsString(":>");
-                            Console.WriteLine("Skriv in ditt lösenord:");
-                            string inputPassword = ReadLineAsString(":>");
+                        Console.Clear();
+                        Console.WriteLine("Skriv in ditt användar ID:");
+                        string inputUserID = ReadLineAsString(":>");
+                        Console.WriteLine("Skriv in ditt lösenord:");
+                        string inputPassword = ReadLineAsString(":>");
 
-                            if(bb.ValidateUserLogin(inputUserID, inputPassword))
+                        if(bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
                         {
-                                bb.GetActiveUser(inputUserID);
+                                bb.GetActiveBloodDonor(inputUserID);
+                                Console.WriteLine("Du är inloggad som donator");
+                                PauseProgram();
+                        }
+                        else if(bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
+                        {
+                                bb.GetActiveStaff(inputUserID);
+                                Console.WriteLine("Du är inloggad som personal");
+                                PauseProgram();
+                        }
+                        else 
+                        {
+                                Console.WriteLine("FEL...");
+                                PauseProgram();
+                            break;
                         }
                         break;
                     }
                     case keyCreateAccount:
                     {
-                        
+                        //Donator: userID, Förnamn, efternamn, tillgänglig för donation, hälsa ok, blodgrupp, email, lösenord
                         //AddUser();
                         break;
                     }
@@ -111,17 +126,17 @@ namespace Bloodbank
             //     Console.WriteLine("Nu gick det lite fel med donationen!");
             // }
 
-            string userID = "66316";
-            string password = "password";
-            if (bb.ValidateUserLogin(userID, password))
-            {
-                //bb.SetActiveUserAccount();
-                Console.WriteLine("Du är inloggad!");
-            }
-            else
-            {
-                Console.WriteLine("Du är INTE inloggad!");
-            }
+            // string userID = "66316";
+            // string password = "password";
+            // if (bb.ValidateUserLogin(userID, password))
+            // {
+            //     //bb.SetActiveUserAccount();
+            //     Console.WriteLine("Du är inloggad!");
+            // }
+            // else
+            // {
+            //     Console.WriteLine("Du är INTE inloggad!");
+            // }
 
             // Skriv ut mängden blod / blodgrupp via storeprocedure
             foreach (var item in bb.StoredBlood())
@@ -134,7 +149,7 @@ namespace Bloodbank
             //     Console.WriteLine($"AnvändarID: {item.IDNumber} Password: {item.PassWord}");
             // }
 
-            PrintBloodGroupMeny();
+            PrintBloodGroupMenu();
             //Information för att STAFF ska skicka mail om förfrågan av blod
             int bloodgroup = 1;
             BloodGroup type = (BloodGroup)bloodgroup;
@@ -152,7 +167,7 @@ namespace Bloodbank
             Console.WriteLine("---            :)           ---");
             Console.WriteLine("---                         ---");
         }
-        private static void PrintStartMenyOption()
+        private static void PrintStartMenuOption()
         {
             Console.Clear();
             Console.WriteLine($"-------------------------------");
@@ -160,7 +175,7 @@ namespace Bloodbank
             Console.WriteLine($"{keyCreateAccount} : Registrera nytt donator konto");
             Console.WriteLine($"{keyQuit} : Avsluta");
         }
-        private static void PrintStaffMenyOption()
+        private static void PrintStaffMenuOption()
         {
             Console.Clear();
             Console.WriteLine($"-------------------------------");
@@ -169,7 +184,7 @@ namespace Bloodbank
             Console.WriteLine($"{keyRequestBloodDonation} : Skicka ut mail med förfrågan om att donera blod");
             Console.WriteLine($"{keyLoggout} : Logga ut");
         }
-        private static void PrintBloodGroupMeny()
+        private static void PrintBloodGroupMenu()
         {
             foreach (int menuChoiceNumber in Enum.GetValues(typeof(BloodGroup)))
             {
@@ -216,6 +231,13 @@ namespace Bloodbank
             } while (!success);
 
             return output;
+        }
+
+        static void PauseProgram()
+        {
+            Console.WriteLine("\nTryck valfri tangent för att gå vidare");
+            Console.ReadKey();
+            Console.Clear();
         }
 
 
