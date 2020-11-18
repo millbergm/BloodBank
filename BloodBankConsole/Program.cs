@@ -1,36 +1,71 @@
 ﻿using System;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace Bloodbank
 {
     class Program
     {
+            const ConsoleKey keyLoggin = ConsoleKey.L;
+            const ConsoleKey keyAccount = ConsoleKey.S;
+            const ConsoleKey keyQuit = ConsoleKey.Q;
+            const ConsoleKey keyCheckAmountBlood = ConsoleKey.A;
+            const ConsoleKey keyRegisterNewDonation = ConsoleKey.D;
+            const ConsoleKey keyRequestBloodDonation = ConsoleKey.R;
+            const ConsoleKey keyLoggout = ConsoleKey.L;
         static void Main(string[] args)
         {
-            Console.Clear();
+            bool isRunning = true;
             Bloodbank bb = new Bloodbank();
 
-            // Console.Write("First name: ");
-            // string firstName = "Viktor"; //Console.ReadLine();
-            // Console.Write("Last name: ");
-            // string lastName = "Ahlin"; //Console.ReadLine();
-            // string idnumber = "19901019-5261";
-            // string email = "Viktor@gmail.com";
-            // int availabletodonate = 1;
-            // int healthOK = 1;
-            // DateTime latestDonation = DateTime.Now;
 
-            // BloodGroup bloodGroup = BloodGroup.AB;
-            // User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
-            // try
-            // {
-            //     bb.AddUser(newDonor);
-            // }
-            // catch (SqlException)
-            // {
-            //     //Console.WriteLine(e);
-            //     Console.WriteLine("Nu gick det lite fel !");
-            // }
+
+
+            PrintWelcomePageBloodBank();
+            Thread.Sleep(500);
+            while (isRunning)
+            {
+                PrintStartMenyOption();
+                switch (Console.ReadKey().Key)
+                {
+                    case keyLoggin:
+                    {
+                        break;
+                    }
+                    case keyAccount:
+                    {
+                        break;
+                    }
+                    case keyQuit:
+                    {
+                        isRunning = false;
+                        break;
+                    }
+                }
+                
+            }
+
+            Console.Write("First name: ");
+            string firstName = "Viktor"; //Console.ReadLine();
+            Console.Write("Last name: ");
+            string lastName = "Ahlin"; //Console.ReadLine();
+            string idnumber = "19901019-5261";
+            string email = "Viktor@gmail.com";
+            int availabletodonate = 1;
+            int healthOK = 1;
+            DateTime latestDonation = DateTime.Now;
+
+            BloodGroup bloodGroup = BloodGroup.AB;
+            User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
+            try
+            {
+                bb.AddUser(newDonor);
+            }
+            catch (SqlException)
+            {
+                //Console.WriteLine(e);
+                Console.WriteLine("Nu gick det lite fel !");
+            }
 
             // Console.ReadLine();
 
@@ -101,42 +136,42 @@ namespace Bloodbank
             }
         }
 
-
-        private static void WelcomePageBloodBank()
+        private static void PrintWelcomePageBloodBank()
         {
             Console.Clear();
             Console.WriteLine("-------------------------------");
             Console.WriteLine("--- Välommen till Blodbanken---");
             Console.WriteLine("---            :)           ---");
+            Console.WriteLine("---                         ---");
         }
-        private static void StartPageOption()
+        private static void PrintStartMenyOption()
         {
             Console.Clear();
             Console.WriteLine($"-------------------------------");
-            Console.WriteLine($"keyLoggin : Logga in");
-            Console.WriteLine($"keyAccount : Registrera ny användare");
-            Console.WriteLine($"keyQuit : Avsluta");
+            Console.WriteLine($"{keyLoggin} : Logga in");
+            Console.WriteLine($"{keyAccount} : Registrera nytt donator konto");
+            Console.WriteLine($"{keyQuit} : Avsluta");
         }
-        private static void StaffPageOption()
+        private static void PrintStaffMenyOption()
         {
             Console.Clear();
             Console.WriteLine($"-------------------------------");
-            Console.WriteLine($"keyCheckAmountBlood : Kolla hur mycket blod som finns");
-            Console.WriteLine($"keyRegisterNewDonation : Registrera ny bloddonation");
-            Console.WriteLine($"keyRequestBloodDonation : Skicka ut mail med förfrågan om att donera blod");
-            Console.WriteLine($"keyQuit : Avsluta");
+            Console.WriteLine($"{keyCheckAmountBlood} : Kolla hur mycket blod som finns");
+            Console.WriteLine($"{keyRegisterNewDonation} : Registrera ny bloddonation");
+            Console.WriteLine($"{keyRequestBloodDonation} : Skicka ut mail med förfrågan om att donera blod");
+            Console.WriteLine($"{keyLoggout} : Logga ut");
         }
         private static void PrintBloodGroupMeny()
         {
             foreach (int menuChoiceNumber in Enum.GetValues(typeof(BloodGroup)))
             {
-                Console.WriteLine("{0}. {1}", menuChoiceNumber, Enum.GetName(typeof(BloodGroup), menuChoiceNumber));
+                Console.WriteLine("{0}. Blodgrupp {1}", menuChoiceNumber, Enum.GetName(typeof(BloodGroup), menuChoiceNumber));
             }
         }
         private static string ReadLineAsString(string printString)
         {
             string output = "";
-            string input = "";
+            string input = "";            
             bool success = false;
 
             do

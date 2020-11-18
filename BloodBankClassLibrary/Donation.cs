@@ -14,7 +14,6 @@ namespace Bloodbank
         }
         public Donation (int amountOfBlood, string donorID, string staffID)
         {
-            //this.Bloodgroup = bloodGroup;
             this.AmountOfBlood = amountOfBlood;
             this.DonorID = donorID;
             this.StaffID = staffID;
