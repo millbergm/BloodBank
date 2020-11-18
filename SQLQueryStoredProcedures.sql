@@ -110,3 +110,13 @@ if exists (select Staff.ID from Staff where Staff.ID = @idnumber)
 	select FirstName, LastName, ID, Title from Staff
 	end
 end
+
+go
+
+create or alter procedure UpdateDonor(@idnumber varchar(50), @availabletodonate bit)
+as
+begin
+update Donors
+set AvailableToDonate = @availabletodonate
+where IDNumber = @idnumber
+end

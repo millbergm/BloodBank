@@ -42,7 +42,6 @@ namespace Bloodbank
                             Console.WriteLine("Skriv in ditt lösenord:");
                             string inputPassword = ReadLineAsString(":>");
 
-
                             if (bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
                             {
                                 foreach (var item in bb.GetActiveUser(inputUserID))
@@ -81,7 +80,10 @@ namespace Bloodbank
                                 Console.WriteLine("Vilken blodgrupp tillhör du: ");
                                 Console.WriteLine("Skriv in din email: ");
                                 Console.WriteLine("Välj ett lösenord: ");
+                                //BloodDonor newDonor = new BloodDonor();
+                               // bb.AddUser(newDonor);
                                 // skapa konto donator
+                                PauseProgram();
                                 break;
                             }
                             else
