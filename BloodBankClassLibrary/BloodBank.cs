@@ -5,8 +5,9 @@ namespace Bloodbank
 {
     public class Bloodbank
     {
-        DBRepository db = new DBRepository(connectionString);
         const string connectionString = "Server = 40.85.84.155; Database = OOPgroup2; User = Student10; Password = zombie-virus@2020;";
+        DBRepository db = new DBRepository(connectionString);
+        
         public void AddUser(User user)
         {           
             db.WriteUserToDB(user);
@@ -23,8 +24,12 @@ namespace Bloodbank
                     return true;
                 }   
             }
-            
             return false;
+        }
+
+        public IEnumerable<User>  GetActiveUser(string userID)
+        {
+            return db.GetUserFromDB(userID);
         }
 
         public void AddDonation(Donation donation)
@@ -52,14 +57,14 @@ namespace Bloodbank
             return requestDonation;
         }
 
-        public List<User> GetAllUsers()
-        {
-            List<User> allUsers = new List<User>();            
-            foreach (var user in db.GetUserLogin())
-            {
-                allUsers.Add(user);
-            }
-            return allUsers;
-        }
+        // public List<User> GetAllUsers()
+        // {
+        //     List<User> allUsers = new List<User>();            
+        //     foreach (var user in db.GetUserLogin())
+        //     {
+        //         allUsers.Add(user);
+        //     }
+        //     return allUsers;
+        // }
     }
 }

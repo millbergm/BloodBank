@@ -7,7 +7,7 @@ namespace Bloodbank
     class Program
     {
             const ConsoleKey keyLoggin = ConsoleKey.L;
-            const ConsoleKey keyAccount = ConsoleKey.S;
+            const ConsoleKey keyCreateAccount = ConsoleKey.S;
             const ConsoleKey keyQuit = ConsoleKey.Q;
             const ConsoleKey keyCheckAmountBlood = ConsoleKey.A;
             const ConsoleKey keyRegisterNewDonation = ConsoleKey.D;
@@ -18,9 +18,6 @@ namespace Bloodbank
             bool isRunning = true;
             Bloodbank bb = new Bloodbank();
 
-
-
-
             PrintWelcomePageBloodBank();
             Thread.Sleep(500);
             while (isRunning)
@@ -30,10 +27,21 @@ namespace Bloodbank
                 {
                     case keyLoggin:
                     {
+                            Console.WriteLine("Skriv in ditt användar ID:");
+                            string inputUserID = ReadLineAsString(":>");
+                            Console.WriteLine("Skriv in ditt lösenord:");
+                            string inputPassword = ReadLineAsString(":>");
+
+                            if(bb.ValidateUserLogin(inputUserID, inputPassword))
+                        {
+                                bb.GetActiveUser(inputUserID);
+                        }
                         break;
                     }
-                    case keyAccount:
+                    case keyCreateAccount:
                     {
+                        
+                        //AddUser();
                         break;
                     }
                     case keyQuit:
@@ -45,27 +53,27 @@ namespace Bloodbank
                 
             }
 
-            Console.Write("First name: ");
-            string firstName = "Viktor"; //Console.ReadLine();
-            Console.Write("Last name: ");
-            string lastName = "Ahlin"; //Console.ReadLine();
-            string idnumber = "19901019-5261";
-            string email = "Viktor@gmail.com";
-            int availabletodonate = 1;
-            int healthOK = 1;
-            DateTime latestDonation = DateTime.Now;
+            // Console.Write("First name: ");
+            // string firstName = "Viktor"; //Console.ReadLine();
+            // Console.Write("Last name: ");
+            // string lastName = "Ahlin"; //Console.ReadLine();
+            // string idnumber = "19901019-5261";
+            // string email = "Viktor@gmail.com";
+            // int availabletodonate = 1;
+            // int healthOK = 1;
+            // DateTime latestDonation = DateTime.Now;
 
-            BloodGroup bloodGroup = BloodGroup.AB;
-            User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
-            try
-            {
-                bb.AddUser(newDonor);
-            }
-            catch (SqlException)
-            {
-                //Console.WriteLine(e);
-                Console.WriteLine("Nu gick det lite fel !");
-            }
+            // BloodGroup bloodGroup = BloodGroup.AB;
+            // User newDonor = new BloodDonor(firstName, lastName, idnumber, email, availabletodonate, healthOK, bloodGroup, latestDonation);
+            // try
+            // {
+            //     bb.AddUser(newDonor);
+            // }
+            // catch (SqlException)
+            // {
+            //     //Console.WriteLine(e);
+            //     Console.WriteLine("Nu gick det lite fel !");
+            // }
 
             // Console.ReadLine();
 
@@ -121,10 +129,10 @@ namespace Bloodbank
                 Console.WriteLine($"{item.AmountOfBlood} Enheter : Blodgrupp {item.Bloodgroup}");
             }
 
-            foreach (var item in bb.GetAllUsers())
-            {
-                Console.WriteLine($"AnvändarID: {item.IDNumber} Password: {item.PassWord}");
-            }
+            // foreach (var item in bb.GetAllUsers())
+            // {
+            //     Console.WriteLine($"AnvändarID: {item.IDNumber} Password: {item.PassWord}");
+            // }
 
             PrintBloodGroupMeny();
             //Information för att STAFF ska skicka mail om förfrågan av blod
@@ -149,7 +157,7 @@ namespace Bloodbank
             Console.Clear();
             Console.WriteLine($"-------------------------------");
             Console.WriteLine($"{keyLoggin} : Logga in");
-            Console.WriteLine($"{keyAccount} : Registrera nytt donator konto");
+            Console.WriteLine($"{keyCreateAccount} : Registrera nytt donator konto");
             Console.WriteLine($"{keyQuit} : Avsluta");
         }
         private static void PrintStaffMenyOption()

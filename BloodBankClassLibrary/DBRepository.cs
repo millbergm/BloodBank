@@ -19,27 +19,21 @@ namespace Bloodbank
             {
                 if (user.GetType() == typeof(BloodDonor))
                 {
-                    sqlConnection.Execute("EXEC AddDonor @IDNumber, @Firstname, @LastName, @AvailableToDonate, @HealthOK, @Bloodgroup, @Email, '';", user);
+                    sqlConnection.Execute("EXEC AddDonor @IDNumber, @Firstname, @LastName, @AvailableToDonate, @HealthOK, @Bloodgroup, @Email, @PassWord;", user);
                 }
                 else if (user.GetType() == typeof(Staff))
                 {
-                    sqlConnection.Execute("EXEC AddStaff @IDNumber, @FirstName, @LastName, @Title, '';", user);
+                    sqlConnection.Execute("EXEC AddStaff @IDNumber, @FirstName, @LastName, @Title, @PassWord;", user);
                 }
 
             }
         }
 
-        public IEnumerable<User> GetUserFromDB(object o)
+        public IEnumerable<User> GetUserFromDB(string idNumber)
         {
-            int loginStatus = Convert.ToInt32(o);
-            if (loginStatus == 1)
-            {
-                ///////////////////////////////////
-            }
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                //TODO/////////////////////////////////////////////////////////////////////////////////////////
-                return sqlConnection.Query<User>("EXEC GetDonor");
+                return sqlConnection.Query<User>("EXEC GetUserInfo @idnumber", idNumber);
             }
         }
         public IEnumerable<Donation> CheckAmountOfBlood()   //funkar
@@ -70,17 +64,16 @@ namespace Bloodbank
             using (SqlConnection sqlConnection1 = new SqlConnection(ConnectionString))
             {
                 return sqlConnection1.Query<int>($"EXEC GetUserLogin {userID}, {password};");
-                
+                //0 = does not exist, 1 = donor, 2 = staff
             }
         }
         
-        public IEnumerable<User> GetUserLogin()  
-        {
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-                //TODO
-                return sqlConnection.Query<User>("EXEC GetUserLogin2");
-            }
-        }
+        // public IEnumerable<User> GetUserLogin()  ///???
+        // {
+        //     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+        //     {
+        //         return sqlConnection.Query<User>("EXEC GetUserLogin2");
+        //     }
+        // }
     }
 }

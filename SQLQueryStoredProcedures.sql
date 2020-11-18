@@ -96,3 +96,18 @@ begin
 select sum(BloodBank.AmountOfBlood) as AmountOfBlood, BloodBank.BloodGroupID as Bloodgroup from BloodBank
 group by BloodBank.BloodGroupID
 end
+
+go
+
+create or alter procedure GetUserInfo (@idnumber varchar(50))
+as
+begin
+if exists (select Donors.IDNumber from Donors where Donors.IDNumber = @idnumber)
+	begin
+	select FirstName, LastName, IDNumber, Email, AvailableToDonate, LatestDonation, BloodGroupID from Donors
+	end
+if exists (select Staff.ID from Staff where Staff.ID = @idnumber)
+	begin
+	select FirstName, LastName, ID, Title from Staff
+	end
+end
