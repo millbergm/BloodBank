@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Data.SqlClient;
 using System.Threading;
+using System.Collections.Generic;
+using System.IO;
 
 namespace Bloodbank
 {
     class Program
     {
-            const ConsoleKey keyLoggin = ConsoleKey.L;
-            const ConsoleKey keyCreateAccount = ConsoleKey.S;
-            const ConsoleKey keyQuit = ConsoleKey.Q;
-            const ConsoleKey keyCheckAmountBlood = ConsoleKey.A;
-            const ConsoleKey keyRegisterNewDonation = ConsoleKey.D;
-            const ConsoleKey keyRequestBloodDonation = ConsoleKey.R;
-            const ConsoleKey keyLoggout = ConsoleKey.L;
+        const ConsoleKey keyLoggin = ConsoleKey.L;
+        const ConsoleKey keyCreateAccount = ConsoleKey.S;
+        const ConsoleKey keyQuit = ConsoleKey.Q;
+        const ConsoleKey keyCheckAmountBlood = ConsoleKey.A;
+        const ConsoleKey keyRegisterNewDonation = ConsoleKey.D;
+        const ConsoleKey keyRequestBloodDonation = ConsoleKey.R;
+        const ConsoleKey keyLoggout = ConsoleKey.L;
         static void Main(string[] args)
         {
             bool isRunning = true;
@@ -23,65 +25,82 @@ namespace Bloodbank
             while (isRunning)
             {
                 PrintStartMenuOption();
-                switch (Console.ReadKey().Key)
+                switch (Console.ReadKey(true).Key)
                 {
                     case keyLoggin:
-                    {
-                        Console.Clear();
-                        Console.WriteLine("Skriv in ditt användar-ID:");
-                        
-                        string inputUserID = ReadLineAsString(":>");
-                        if (IsDigitsOnly(inputUserID) == false)
                         {
-                            Console.Writeline("Du angav ett ID av fel format.")
-                            PauseProgram();
-                            break;
-                        }
-                        Console.WriteLine("Skriv in ditt lösenord:");
-                        string inputPassword = ReadLineAsString(":>");
+                            Console.Clear();
+                            Console.WriteLine("Skriv in ditt användar-ID:");
 
-                        if(bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
-                        {
-                                bb.GetActiveUser(inputUserID);
+                            string inputUserID = ReadLineAsString(":>");
+                            if (IsDigitsOnly(inputUserID) == false)
+                            {
+                                Console.WriteLine("Du angav ett ID av fel format.");
+                                PauseProgram();
+                                break;
+                            }
+                            Console.WriteLine("Skriv in ditt lösenord:");
+                            string inputPassword = ReadLineAsString(":>");
+
+
+                            if (bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
+                            {
+                                foreach (var item in bb.GetActiveUser(inputUserID))
+                                {
+                                    Console.WriteLine(item);
+                                }
                                 Console.WriteLine("Du är inloggad som donator");
                                 PauseProgram();
-                        }
-                        else if(bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
-                        {
+                            }
+                            else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
+                            {
                                 bb.GetActiveUser(inputUserID);
                                 Console.WriteLine("Du är inloggad som personal");
                                 PauseProgram();
-                        }
-                        else 
-                        {
+                            }
+                            else
+                            {
                                 Console.WriteLine("FEL...");
                                 PauseProgram();
+                                break;
+                            }
                             break;
                         }
-                        break;
-                    }
                     case keyCreateAccount:
-                    {
-                        // Konto för donator
-                        // metod med fråge formulär där "rätt svar" sätter HelthOK till true
-                        Console.WriteLine("Skriv in ett användar ID, 12 siffror:");
-                        Consoel.WriteLine("Skriv in förnamn: ");
-                        Consoel.WriteLine("Skriv in efternamn: ");
-                        Consoel.WriteLine("ÄR du tillgänglig för att donera blod?: ");
-                        Consoel.WriteLine("Vilken blodgrupp tillhör du: ");
-                        Consoel.WriteLine("Skriv in din email: ");
-                        Consoel.WriteLine("Välj ett lösenord: ");
-                        //Donator: userID, Förnamn, efternamn, tillgänglig för donation, hälsa ok, blodgrupp, email, lösenord
-                        //AddUser();
-                        break;
-                    }
+                        {
+                            Console.Clear();
+                            // Konto för donator
+                            if (QuestionHealthForm())
+                            {
+                                //int healthOK = 1;
+
+                                Console.WriteLine("Skriv in ett användar ID, 12 siffror:");
+                                Console.WriteLine("Skriv in förnamn: ");
+                                Console.WriteLine("Skriv in efternamn: ");
+                                Console.WriteLine("Är du tillgänglig för att donera blod?: ");
+                                Console.WriteLine("Vilken blodgrupp tillhör du: ");
+                                Console.WriteLine("Skriv in din email: ");
+                                Console.WriteLine("Välj ett lösenord: ");
+                                // skapa konto donator
+                                break;
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                Console.WriteLine("Du är inte godkänd som blodgivare");
+                                PauseProgram();
+                                break;
+                            }
+                            //Donator: userID, Förnamn, efternamn, tillgänglig för donation, hälsa ok, blodgrupp, email, lösenord
+                            //AddUser();
+                        }
                     case keyQuit:
-                    {
-                        isRunning = false;
-                        break;
-                    }
+                        {
+                            isRunning = false;
+                            break;
+                        }
                 }
-                
+
             }
 
             // Console.Write("First name: ");
@@ -210,14 +229,14 @@ namespace Bloodbank
         private static string ReadLineAsString(string printString)
         {
             string output = "";
-            string input = "";            
+            string input = "";
             bool success = false;
 
             do
             {
                 Console.Write(printString);
                 input = Console.ReadLine();
-                if (!String.IsNullOrWhitespace(input)) success = true;
+                if (!String.IsNullOrWhiteSpace(input)) success = true;
                 else Console.WriteLine("Hoppsan! Du skrev inte in något.");
             } while (!success);
 
@@ -249,21 +268,46 @@ namespace Bloodbank
             return output;
         }
 
-        static void PauseProgram()
+        private static void PauseProgram()
         {
             Console.WriteLine("\nTryck valfri tangent för att gå vidare");
             Console.ReadKey();
             Console.Clear();
         }
 
-        static bool IsDigitsOnly(string str)
+        private static bool IsDigitsOnly(string str)
         {
-        foreach (char c in str)
+            foreach (char c in str)
+            {
+                if (c < '0' || c > '9')
+                    return false;
+            }
+            return true;
+        }
+
+        private static bool QuestionHealthForm()
         {
-            if (c < '0' || c > '9')
-            return false;
+            StreamReader HealthQuestionFile = new StreamReader("Survey.md");
+            string healthQuestion = HealthQuestionFile.ReadLine();
+
+            while (( healthQuestion = HealthQuestionFile.ReadLine()) != null)
+            {
+                Console.WriteLine(healthQuestion);
+                while (true)
+                {
+                    ConsoleKey input = Console.ReadKey(true).Key;
+                    if (input == ConsoleKey.N)
+                    {
+                        break;
+                    }
+                    else if (input == ConsoleKey.J)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
-        return true;
-        }
+
     }
 }
