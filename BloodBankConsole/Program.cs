@@ -47,10 +47,10 @@ namespace Bloodbank
                             foreach (var loggedInUser in bb.GetLoggedInUser(inputUserID))
                             {
                                 
-                                loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.IDNumber, loggedInUser.Email, Convert.ToBoolean(loggedInUser.availableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
+                                loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.availableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
                                 Console.WriteLine(loggedInUser.FirstName);
                                 Console.WriteLine(loggedInUser.LastName);
-                                Console.WriteLine(loggedInUser.IDNumber);
+                                Console.WriteLine(loggedInUser.ID);
                                 Console.WriteLine(loggedInUser.Email);
                                 Console.WriteLine(Convert.ToBoolean(loggedInUser.availableToDonate));
                                 Console.WriteLine(Convert.ToBoolean(loggedInUser.HealthOK));
@@ -71,12 +71,6 @@ namespace Bloodbank
                                 Console.WriteLine(loggedInUser.ID);
                                 Console.WriteLine(loggedInUser.Title);
                             }
-                            Console.WriteLine("Du är inloggad som personal");
-                            PauseProgram();
-                        }
-                        else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
-                        {
-                            bb.GetLoggedInUser(inputUserID);
                             Console.WriteLine("Du är inloggad som personal");
                             PauseProgram();
                         }
