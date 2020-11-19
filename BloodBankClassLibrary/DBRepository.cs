@@ -36,7 +36,7 @@ namespace Bloodbank
                 return sqlConnection.Query<dynamic>($"EXEC GetUserInfo {idNumber}");
             }
         }
-        public IEnumerable<Donation> CheckAmountOfBlood()   //funkar
+        public IEnumerable<Donation> CheckAmountOfBlood()   //funkar 
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {

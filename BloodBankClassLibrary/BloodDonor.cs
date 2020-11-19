@@ -28,10 +28,20 @@ namespace Bloodbank
             this.IDNumber = idNumber;
             this.Email = eMail;
             this.AvailableToDonate = availableToDonate;
-            this.HealthOK = healthOK;
-            //BloodGroup BloodGroup = (BloodGroup)bloodGroup;
+            this.HealthOK = healthOK;            
             this.BloodGroup = bloodGroup;
             this.LatestDonation = latestDonation;
+        }
+        public BloodDonor (string firstName, string lastName, string idNumber, string eMail, bool availableToDonate, bool healthOK, int bloodGroup, string passWord)
+        {
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.IDNumber = idNumber;
+            this.Email = eMail;
+            this.AvailableToDonate = availableToDonate;
+            this.HealthOK = healthOK;           
+            this.BloodGroup = bloodGroup;
+            this.PassWord = passWord;
         }
 
         public override string ToString() => $"{FirstName}, {LastName}, {IDNumber}, {Email}, {BloodGroup}";
