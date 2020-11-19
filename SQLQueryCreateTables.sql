@@ -9,7 +9,7 @@ create table Donors (
 	AvailableToDonate bit default 1,
 	HealthOK bit default 1,
 	BloodGroupID int foreign key references BloodGroups(ID),
-	LatestDonation DateTime);
+	LatestDonation Date);
 
 go
 
@@ -31,10 +31,10 @@ Create table BloodBank(
 go
 
 alter table BloodBank
-	add DateOfDonation DateTime default getdate();
+	add DateOfDonation Date default getdate();
 
 alter table staff
-	add PassWord varchar(50) not null
+	add PassWord varchar(50)
 
 alter table Donors
-	add PassWord varchar(50) not null
+	add PassWord varchar(50)
