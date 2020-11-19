@@ -38,3 +38,6 @@ alter table staff
 
 alter table Donors
 	add PassWord varchar(50)
+
+alter table Donors
+alter Column LatestDonation set Default '1900-01-01'

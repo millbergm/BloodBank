@@ -16,23 +16,24 @@ insert into Staff
 
 update Staff set id = '995-00'
 where ID = '099500'
+
+select * from BloodGroups
 		
 select * from staff
 
 select * from donors
 
-delete from Donors
-where IDNumber = '1234567'
-
 select * from BloodBank
+
+delete from Donors
+where ID = '1234567'
 
 exec RequestDonation 1
 
 update Donors set PassWord = 'password'
 
 delete from Staff
-where ID = '995-00'
+where ID = '123456'
 
 update Donors
-set IDNumber = '199010195261'
-where IDNumber = '19901019-5261'
+set 
