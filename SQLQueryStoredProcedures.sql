@@ -1,3 +1,7 @@
+use OOPGroup2
+
+go
+
 create or alter procedure GetUserLogin(@idnumber varchar(50), @password varchar(50))
 as
 declare @value int = 0

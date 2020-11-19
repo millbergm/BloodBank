@@ -1,3 +1,7 @@
+use OOPGroup2
+
+go
+
 create table BloodGroups ( ID int primary key, Typ varchar (2));
 
 go
@@ -38,6 +42,3 @@ alter table staff
 
 alter table Donors
 	add PassWord varchar(50)
-
-alter table Donors
-alter Column LatestDonation set Default '1900-01-01'

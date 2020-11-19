@@ -14,8 +14,6 @@ select donors.id, firstname, LastName, BloodGroups.Typ from Donors
 insert into Staff
 	values('995-00', 'Marcus', 'Millberg', 'Konstig Titel', 'password')
 
-update Staff set id = '995-00'
-where ID = '099500'
 
 select * from BloodGroups
 		
@@ -27,8 +25,6 @@ select * from BloodBank
 
 delete from Donors
 where ID = '1234567'
-
-exec RequestDonation 1
 
 update Donors set PassWord = 'password'
 
