@@ -61,19 +61,21 @@ namespace Bloodbank
                 
         public IEnumerable<int> CheckUserLogin(string userID, string password)
         {
-            using (SqlConnection sqlConnection1 = new SqlConnection(ConnectionString))
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                return sqlConnection1.Query<int>($"EXEC GetUserLogin {userID}, {password};");
+                return sqlConnection.Query<int>($"EXEC GetUserLogin {userID}, {password};");
                 //0 = does not exist, 1 = donor, 2 = staff
             }
         }
+
+        public void UpdateAvailableToDonation(bool change, string ID)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                sqlConnection.Execute($"EXEC UpdateAvailableToDonation {change}, {ID};");
+            }
+        }
         
-        // public IEnumerable<User> GetUserLogin()  ///???
-        // {
-        //     using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-        //     {
-        //         return sqlConnection.Query<User>("EXEC GetUserLogin2");
-        //     }
-        // }
+        
     }
 }
