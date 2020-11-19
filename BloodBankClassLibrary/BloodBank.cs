@@ -24,10 +24,15 @@ namespace Bloodbank
             return 0;
         }
 
-        public IEnumerable<Object>  GetActiveUser(string userID)
+        public IEnumerable<dynamic> GetLoggedInUser(string userID)
         {
-            return db.GetUserFromDB(userID);
+      
+        return db.GetUserFromDB(userID);
+
         }
+
+
+        
 
        /* public IEnumerable<Object>  GetActiveStaff(string userID)
         {

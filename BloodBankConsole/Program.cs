@@ -31,7 +31,6 @@ namespace Bloodbank
                         {
                             Console.Clear();
                             Console.WriteLine("Skriv in ditt användar-ID:");
-
                             string inputUserID = ReadLineAsString(":>");
                             if (IsDigitsOnly(inputUserID) == false)
                             {
@@ -44,16 +43,22 @@ namespace Bloodbank
 
                             if (bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
                             {
-                                foreach (var item in bb.GetActiveUser(inputUserID))
+                                BloodDonor loggedInDonor;
+                                foreach (var loggedInUser in bb.GetLoggedInUser(inputUserID))
                                 {
-                                    Console.WriteLine(item);
+                                    Console.WriteLine(loggedInUser);
+                                    loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.IDNumber, loggedInUser.Email, loggedInUser.availableToDonate, loggedInUser.HealthOK, loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
                                 }
+                                
+                                
+                         
+                               
                                 Console.WriteLine("Du är inloggad som donator");
                                 PauseProgram();
                             }
                             else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
                             {
-                                bb.GetActiveUser(inputUserID);
+                                bb.GetLoggedInUser(inputUserID);
                                 Console.WriteLine("Du är inloggad som personal");
                                 PauseProgram();
                             }
@@ -71,18 +76,42 @@ namespace Bloodbank
                             // Konto för donator
                             if (QuestionHealthForm())
                             {
-                                //int healthOK = 1;
-
-                                Console.WriteLine("Skriv in ett användar ID, 12 siffror:");
-                                Console.WriteLine("Skriv in förnamn: ");
-                                Console.WriteLine("Skriv in efternamn: ");
-                                Console.WriteLine("Är du tillgänglig för att donera blod?: ");
-                                Console.WriteLine("Vilken blodgrupp tillhör du: ");
-                                Console.WriteLine("Skriv in din email: ");
-                                Console.WriteLine("Välj ett lösenord: ");
-                                //BloodDonor newDonor = new BloodDonor();
-                               // bb.AddUser(newDonor);
-                                // skapa konto donator
+                                bool healthOK = true;
+                                bool availableToDonate = true;
+                                Console.Write("Skriv in ditt personnummer, 12 siffror (YYYYMMDDXXXX): ");
+                                string idNumber = Console.ReadLine();
+                                Console.Write("\nSkriv in förnamn: ");
+                                string firstName = Console.ReadLine();
+                                Console.Write("\nSkriv in efternamn: ");
+                                string lastName = Console.ReadLine();
+                                Console.WriteLine("\nVilken blodgrupp tillhör du: ");
+                                PrintBloodGroupMenu();
+                                int bloodGroup = BloodGroupChoice();
+                                BloodGroup bloodtype = (BloodGroup)bloodGroup;
+                                Console.Write("\nSkriv in din email: ");
+                                string eMail = Console.ReadLine();
+                                Console.Write("\nVälj ett lösenord: ");
+                                string passWord = Console.ReadLine();
+                                Console.Clear();
+                                Console.WriteLine("Du har skrivit in följande:");
+                                Console.WriteLine($"Personnummer: {idNumber}\nFörnamn: {firstName}\nEfternamn: {lastName}\nBlodgrupp: {bloodtype}\nEmail: {eMail}\nLösenord: {passWord}");
+                                Console.WriteLine("Stämmer Uppgifterna? J/N");
+                                ConsoleKey input;
+                                while (true)
+                                {
+                                    input = Console.ReadKey(true).Key;
+                                    if (input == ConsoleKey.N)
+                                    {
+                                        break;
+                                    }
+                                    else if (input == ConsoleKey.J)
+                                    {
+                                        DateTime created = DateTime.Today;
+                                        BloodDonor newDonor = new BloodDonor(firstName, lastName, idNumber, eMail, availableToDonate, healthOK, bloodGroup, created);
+                                        bb.AddUser(newDonor);
+                                        // skapa konto donator
+                                    }
+                                }
                                 PauseProgram();
                                 break;
                             }
@@ -186,7 +215,7 @@ namespace Bloodbank
             //     Console.WriteLine($"AnvändarID: {item.IDNumber} Password: {item.PassWord}");
             // }
 
-            PrintBloodGroupMenu();
+
             //Information för att STAFF ska skicka mail om förfrågan av blod
             int bloodgroup = 1;
             BloodGroup type = (BloodGroup)bloodgroup;
@@ -292,7 +321,7 @@ namespace Bloodbank
             StreamReader HealthQuestionFile = new StreamReader("Survey.md");
             string healthQuestion = HealthQuestionFile.ReadLine();
 
-            while (( healthQuestion = HealthQuestionFile.ReadLine()) != null)
+            while ((healthQuestion = HealthQuestionFile.ReadLine()) != null)
             {
                 Console.WriteLine(healthQuestion);
                 while (true)
@@ -309,6 +338,37 @@ namespace Bloodbank
                 }
             }
             return true;
+        }
+
+        private static int BloodGroupChoice()
+        {
+            ConsoleKey input;
+            while (true)
+            {
+                input = Console.ReadKey(true).Key;                
+                switch (input)
+                {
+                    case ConsoleKey.D1:
+                        {
+                            return 1;
+                        }
+
+                    case ConsoleKey.D2:
+                        {
+                            return 2;
+                        }
+
+                    case ConsoleKey.D3:
+                        {
+                            return 3;
+                        }
+
+                    case ConsoleKey.D4:
+                        {
+                            return 4;
+                        }
+                }
+            }
         }
 
     }

@@ -5,24 +5,23 @@ namespace Bloodbank
     public class BloodDonor : User
         {
         public string Email { get; set; }
-        public int AvailableToDonate { get; set; }
-        public int HealthOK { get; set; }
-        public BloodGroup BloodGroup { get; set; }
+        public bool AvailableToDonate { get; set; }
+        public bool HealthOK { get; set; }
+        //public BloodGroup BloodGroup { get; set; }
+        public int BloodGroup { get; set; }
         public DateTime LatestDonation { get; set; }
 
-        // public BloodDonor(string idNumber, string passWord)
-        // { 
-        //     this.IDNumber = idNumber;
-        //     this.PassWord = passWord;
-        // }
+        public BloodDonor()
+        { 
+        }
 
-        public BloodDonor (string firstName, string eMail, BloodGroup bloodGroup)
+        public BloodDonor (string firstName, string eMail, int bloodGroup)
         {
             this.FirstName = firstName;
             this.Email = eMail;
             this.BloodGroup = bloodGroup;
         }
-        public BloodDonor (string firstName, string lastName, string idNumber, string eMail, int availableToDonate, int healthOK, BloodGroup bloodGroup, DateTime latestDonation)
+        public BloodDonor (string firstName, string lastName, string idNumber, string eMail, bool availableToDonate, bool healthOK, int bloodGroup, DateTime latestDonation)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
@@ -30,6 +29,7 @@ namespace Bloodbank
             this.Email = eMail;
             this.AvailableToDonate = availableToDonate;
             this.HealthOK = healthOK;
+            //BloodGroup BloodGroup = (BloodGroup)bloodGroup;
             this.BloodGroup = bloodGroup;
             this.LatestDonation = latestDonation;
         }
