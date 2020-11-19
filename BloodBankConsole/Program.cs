@@ -41,19 +41,37 @@ namespace Bloodbank
                         Console.WriteLine("Skriv in ditt lösenord:");
                         string inputPassword = ReadLineAsString(":>");
 
-                        if (bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
+                       if (bb.ValidateUserLogin(inputUserID, inputPassword) == 1)
                         {
                             BloodDonor loggedInDonor;
                             foreach (var loggedInUser in bb.GetLoggedInUser(inputUserID))
                             {
-                                Console.WriteLine(loggedInUser);
-                                loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.IDNumber, loggedInUser.Email, loggedInUser.availableToDonate, loggedInUser.HealthOK, loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
+                                
+                                loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.IDNumber, loggedInUser.Email, Convert.ToBoolean(loggedInUser.availableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
+                                Console.WriteLine(loggedInUser.FirstName);
+                                Console.WriteLine(loggedInUser.LastName);
+                                Console.WriteLine(loggedInUser.IDNumber);
+                                Console.WriteLine(loggedInUser.Email);
+                                Console.WriteLine(Convert.ToBoolean(loggedInUser.availableToDonate));
+                                Console.WriteLine(Convert.ToBoolean(loggedInUser.HealthOK));
+                                Console.WriteLine((BloodGroup)loggedInUser.BloodGroupID);
+                                Console.WriteLine(loggedInUser.LatestDonation);
                             }
-                            
-                            
-                        
-                            
                             Console.WriteLine("Du är inloggad som donator");
+                            PauseProgram();
+                        }
+                        else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
+                        {
+                            Staff loggedInStaff;
+                            foreach (var loggedInUser in bb.GetLoggedInUser(inputUserID))
+                            {
+                                loggedInStaff = new Staff(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Title);
+                                Console.WriteLine(loggedInUser.FirstName);
+                                Console.WriteLine(loggedInUser.LastName);
+                                Console.WriteLine(loggedInUser.ID);
+                                Console.WriteLine(loggedInUser.Title);
+                            }
+                            Console.WriteLine("Du är inloggad som personal");
                             PauseProgram();
                         }
                         else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
