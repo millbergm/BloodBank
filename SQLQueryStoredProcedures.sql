@@ -2,7 +2,7 @@ create or alter procedure GetUserLogin(@idnumber varchar(50), @password varchar(
 as
 declare @value int = 0
 begin
-if exists (select Donors.IDNumber from Donors where Donors.IDNumber = @idnumber and Donors.PassWord = @password)
+if exists (select Donors.ID from Donors where Donors.ID = @idnumber and Donors.PassWord = @password)
 begin
 	set @value = 1
 end
@@ -18,7 +18,7 @@ go
 create or alter procedure GetUserLogin2
 as
 begin
-select Donors.IDNumber as IDNumber, Donors.PassWord as PassWord from Donors
+select Donors.ID as IDNumber, Donors.PassWord as PassWord from Donors
 	union
 select Staff.ID as IDNumber, Staff.PassWord as PassWord from Staff
 end
@@ -45,7 +45,7 @@ create or alter procedure AddDonor(
 	@password varchar(50) null)
 as
 begin
-INSERT INTO Donors (IDNumber, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, Email, PassWord) 
+INSERT INTO Donors (ID, FirstName, LastName, AvailableToDonate, HealthOK, BloodGroupID, Email, PassWord) 
 	VALUES (@idnumber, @firstname, @lastname, @availabletodonate, @healthok, @bloodgroupid, @email, @password)
 end
 
@@ -70,13 +70,13 @@ create or alter procedure AddDonation(
 	@donorid varchar(50),
 	@staffid varchar(50))
 as
-declare @bloodgroupid int = (Select Donors.BloodGroupID From Donors where Donors.IDNumber = @donorid)
+declare @bloodgroupid int = (Select Donors.BloodGroupID From Donors where Donors.ID = @donorid)
 begin
 insert into BloodBank(AmountOfBlood, BloodGroupID, DonorID, StaffID)
 	values(@amountofblood, @bloodgroupid, @donorid, @staffid)
 update Donors
 	set LatestDonation = getdate()
-	where donors.IDNumber = @donorid
+	where donors.ID = @donorid
 end
 
 go
@@ -84,7 +84,7 @@ go
 create or alter procedure GetDonor(@idnumber varchar(50))
 as
 begin
-select Donors.FirstName, Donors.LastName, Donors.IDNumber, Donors.Email, Donors.AvailableToDonate, Donors.HealthOK, Donors.BloodGroupID, Donors.LatestDonation from Donors	
+select Donors.FirstName, Donors.LastName, Donors.ID, Donors.Email, Donors.AvailableToDonate, Donors.HealthOK, Donors.BloodGroupID, Donors.LatestDonation from Donors	
 end
 
 go
@@ -101,9 +101,9 @@ go
 create or alter procedure GetUserInfo (@idnumber varchar(50))
 as
 begin
-if exists (select Donors.IDNumber from Donors where Donors.IDNumber = @idnumber)
+if exists (select Donors.ID from Donors where Donors.ID = @idnumber)
 	begin
-	select FirstName, LastName, IDNumber, Email, AvailableToDonate, LatestDonation, BloodGroupID from Donors
+	select FirstName, LastName, ID, Email, AvailableToDonate, LatestDonation, BloodGroupID from Donors
 	end
 if exists (select Staff.ID from Staff where Staff.ID = @idnumber)
 	begin
@@ -118,5 +118,5 @@ as
 begin
 update Donors
 set AvailableToDonate = @availabletodonate
-where IDNumber = @idnumber
+where ID = @idnumber
 end
