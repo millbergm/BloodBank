@@ -1,4 +1,4 @@
-namespace Bloodbank
+namespace BloodbankFunc
 {
 
     public enum BloodGroup

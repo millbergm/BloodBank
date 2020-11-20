@@ -1,6 +1,6 @@
 //using system.collections.generic;
 
-namespace Bloodbank
+namespace BloodbankFunc
 {
     public class Staff : User
     {

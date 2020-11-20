@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Bloodbank
+namespace BloodbankFunc
 {
     public class BloodDonor : User
         {

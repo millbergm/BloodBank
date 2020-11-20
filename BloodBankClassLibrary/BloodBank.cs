@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System;
 
-namespace Bloodbank
+namespace BloodbankFunc
 {
-    public class Bloodbank
+    public class BloodBank
     {
         const string connectionString = "Server = 40.85.84.155; Database = OOPgroup2; User = Student10; Password = zombie-virus@2020;";
         DBRepository db = new DBRepository(connectionString);

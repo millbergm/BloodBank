@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 using Dapper;
 using System;
 
-namespace Bloodbank
+namespace BloodbankFunc
 {
     class DBRepository
     {

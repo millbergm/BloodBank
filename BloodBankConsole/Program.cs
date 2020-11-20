@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
 using System.Threading;
+using BloodbankFunc;
 
-namespace Bloodbank
+namespace BloodbankUI
 {
     class Program
     {
@@ -19,7 +20,7 @@ namespace Bloodbank
         static void Main(string[] args)
         {
             bool isRunning = true;
-            Bloodbank bb = new Bloodbank();
+            BloodBank bb = new BloodBank();
 
             PrintWelcomePageBloodBank();
             Thread.Sleep(1000);
@@ -73,7 +74,7 @@ namespace Bloodbank
                             }
                             else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)
                             {
-                                Staff loggedInStaff = null;;
+                                Staff loggedInStaff = null;
                                 foreach (var loggedInUser in bb.GetLoggedInUser(inputUserID))
                                 {
                                     loggedInStaff = new Staff(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Title);
