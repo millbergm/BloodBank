@@ -24,7 +24,7 @@ namespace BloodbankFunc
             return 0;
         }
 
-        public IEnumerable<dynamic> GetLoggedInUser(string userID)
+        public IEnumerable<dynamic> GetUserInfo(string userID)
         {
       
         return db.GetUserFromDB(userID);
@@ -47,7 +47,7 @@ namespace BloodbankFunc
         public List<Donation> StoredBlood()
         {
             List<Donation> storedBlood = new List<Donation>();            
-            foreach (var donation in db.CheckAmountOfBlood())
+            foreach (Donation donation in db.CheckAmountOfBlood())
             {
                 storedBlood.Add(donation);
             }
