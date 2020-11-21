@@ -48,15 +48,7 @@ namespace BloodbankUI
                                 BloodDonor loggedInDonor = null;
                                 foreach (var loggedInUser in bb.GetLoggedInUser(inputUserID))
                                 {
-                                    loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.availableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
-                                    // Console.WriteLine(loggedInUser.FirstName);
-                                    // Console.WriteLine(loggedInUser.LastName);
-                                    // Console.WriteLine(loggedInUser.ID);
-                                    // Console.WriteLine(loggedInUser.Email);
-                                    // Console.WriteLine(Convert.ToBoolean(loggedInUser.availableToDonate));
-                                    // Console.WriteLine(Convert.ToBoolean(loggedInUser.HealthOK));
-                                    // Console.WriteLine((BloodGroup)loggedInUser.BloodGroupID);
-                                    // Console.WriteLine(loggedInUser.LatestDonation);
+                                    loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.AvailableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
                                 }
                                 Console.WriteLine($"Du är inloggad som {loggedInDonor.FirstName} {loggedInDonor.LastName}");
                                 string available = "ej tillgänglig";
@@ -68,8 +60,14 @@ namespace BloodbankUI
                                 Console.WriteLine("Vill du ändra detta? [J/N]");
                                 if (Console.ReadKey(true).Key == ConsoleKey.J)
                                 {
-                                    //ropa på databasen, ändra
+                                    bb.ChangeDonationStatus(loggedInDonor.AvailableToDonate, loggedInDonor.IDNumber);
+                                    Console.WriteLine("Din status är uppdaterad");
                                 }
+                                else if (Console.ReadKey(true).Key == ConsoleKey.N)
+                                {
+                                    break;
+                                }
+
                                 PauseProgram();
                             }
                             else if (bb.ValidateUserLogin(inputUserID, inputPassword) == 2)

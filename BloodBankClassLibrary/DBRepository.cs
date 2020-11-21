@@ -13,6 +13,7 @@ namespace BloodbankFunc
         {
             this.ConnectionString = connectionString;
         }
+        
         public void WriteUserToDB(User user)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
@@ -36,6 +37,7 @@ namespace BloodbankFunc
                 return sqlConnection.Query<dynamic>($"EXEC GetUserInfo {idNumber}");
             }
         }
+
         public IEnumerable<Donation> CheckAmountOfBlood()   //funkar 
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
@@ -44,6 +46,7 @@ namespace BloodbankFunc
                 return sqlConnection.Query<Donation>("EXEC CheckBloodBank");
             }
         }
+
         public void WriteDonationToDB(Donation donation)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
@@ -51,6 +54,7 @@ namespace BloodbankFunc
                 sqlConnection.Execute("EXEC AddDonation @AmountOfBlood, @DonorID, @StaffID", donation);
             }
         }
+
         public IEnumerable<BloodDonor> RequestDonations(int bloodgroup)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
@@ -68,14 +72,12 @@ namespace BloodbankFunc
             }
         }
 
-        public void UpdateAvailableToDonation(bool change, string ID)
+        public void UpdateAvailableForDonation(bool changeValue, string userID)
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                sqlConnection.Execute($"EXEC UpdateAvailableToDonation {change}, {ID};");
+                sqlConnection.Execute($"EXEC UpdateAvailableForDonation {userID}, {Convert.ToInt16(changeValue)};");
             }
         }
-        
-        
     }
 }

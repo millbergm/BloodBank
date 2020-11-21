@@ -64,6 +64,18 @@ namespace BloodbankFunc
             return requestDonation;
         }
 
+        public void ChangeDonationStatus (bool availableForDonation, string idNumber)
+        {
+            if (availableForDonation == true)
+            {
+                db.UpdateAvailableForDonation(false, idNumber);
+            }
+            else if (availableForDonation == false)
+            {
+                db.UpdateAvailableForDonation(true, idNumber);
+            }
+        }
+
         // public List<User> GetAllUsers()
         // {
         //     List<User> allUsers = new List<User>();            
