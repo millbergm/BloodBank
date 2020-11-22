@@ -56,7 +56,7 @@ namespace BloodbankFunc
 
         public List<BloodDonor> GetListForRequestDonation(int bloodgroup)
         {
-            List<BloodDonor> requestDonation = new List<BloodDonor>();            
+            List<BloodDonor> requestDonation = new List<BloodDonor>();  /// Flytta denna till toppen    
             foreach (var donor in db.RequestDonations(bloodgroup))
             {
                 requestDonation.Add(donor);
