@@ -1,4 +1,3 @@
-//using system.collections.generic;
 
 namespace BloodbankFunc
 {

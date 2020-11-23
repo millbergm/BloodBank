@@ -6,21 +6,20 @@ namespace BloodbankFunc
         {
         public string Email { get; set; }
         public bool AvailableToDonate { get; set; }
-        public bool HealthOK { get; set; }
-        //public BloodGroup BloodGroup { get; set; }
+        public bool HealthOK { get; set; }        
         public int BloodGroup { get; set; }
         public DateTime LatestDonation { get; set; }
 
-        public BloodDonor()
-        { 
-        }
+        // public BloodDonor()
+        // { 
+        // }
 
-        public BloodDonor (string firstName, string eMail, int bloodGroup)
-        {
-            this.FirstName = firstName;
-            this.Email = eMail;
-            this.BloodGroup = bloodGroup;
-        }
+        // public BloodDonor (string firstName, string eMail, int bloodGroup)
+        // {
+        //     this.FirstName = firstName;
+        //     this.Email = eMail;
+        //     this.BloodGroup = bloodGroup;
+        // }
         public BloodDonor (string firstName, string lastName, string idNumber, string eMail, bool availableToDonate, bool healthOK, int bloodGroup, DateTime latestDonation)
         {
             this.FirstName = firstName;
@@ -42,9 +41,6 @@ namespace BloodbankFunc
             this.HealthOK = healthOK;           
             this.BloodGroup = bloodGroup;
             this.PassWord = passWord;
-        }
-
-        public override string ToString() => $"{FirstName}, {LastName}, {IDNumber}, {Email}, {BloodGroup}";
-
+        } 
     }
 }

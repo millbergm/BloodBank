@@ -38,11 +38,10 @@ namespace BloodbankFunc
             }
         }
 
-        public IEnumerable<Donation> CheckAmountOfBlood()   //funkar 
+        public IEnumerable<Donation> CheckAmountOfBlood()  
         {
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-                //TODO
+            {                
                 return sqlConnection.Query<Donation>("EXEC CheckBloodBank");
             }
         }

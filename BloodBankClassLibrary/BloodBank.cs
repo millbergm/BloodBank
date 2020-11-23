@@ -25,19 +25,9 @@ namespace BloodbankFunc
         }
 
         public IEnumerable<dynamic> GetUserInfo(string userID)
-        {
-      
+        {      
         return db.GetUserFromDB(userID);
-
         }
-
-
-        
-
-       /* public IEnumerable<Object>  GetActiveStaff(string userID)
-        {
-            return db.GetUserFromDB(userID);
-        }*/
 
         public void AddDonation(Donation donation)
         {           
@@ -56,7 +46,7 @@ namespace BloodbankFunc
 
         public List<BloodDonor> GetListForRequestDonation(int bloodgroup)
         {
-            List<BloodDonor> requestDonation = new List<BloodDonor>();  /// Flytta denna till toppen    
+            List<BloodDonor> requestDonation = new List<BloodDonor>();    
             foreach (var donor in db.RequestDonations(bloodgroup))
             {
                 requestDonation.Add(donor);
@@ -74,16 +64,6 @@ namespace BloodbankFunc
             {
                 db.UpdateAvailableForDonation(true, idNumber);
             }
-        }
-
-        // public List<User> GetAllUsers()
-        // {
-        //     List<User> allUsers = new List<User>();            
-        //     foreach (var user in db.GetUserLogin())
-        //     {
-        //         allUsers.Add(user);
-        //     }
-        //     return allUsers;
-        // }
+        }      
     }
 }
