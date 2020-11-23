@@ -9,7 +9,7 @@ namespace BloodbankUI
     class Program
     {
         const ConsoleKey keyLoggin = ConsoleKey.L;
-        const ConsoleKey keyCreateAccount = ConsoleKey.S;
+        const ConsoleKey keyCreateAccount = ConsoleKey.R;
         const ConsoleKey keyQuit = ConsoleKey.Q;
         const ConsoleKey keyCheckAmountBlood = ConsoleKey.A;
         const ConsoleKey keyRegisterNewDonation = ConsoleKey.D;
@@ -75,10 +75,10 @@ namespace BloodbankUI
 
                                 while (donormenu)
                                 {
-                                    Console.WriteLine($"Du är inloggad som bloddonator: {loggedInDonor.FirstName} {loggedInDonor.LastName}");
+                                    
                                     string available = "ej tillgänglig";
                                     
-                                    PrintDonorMenu();
+                                    PrintDonorMenu(loggedInDonor.FirstName, loggedInDonor.LastName);
                                     switch (Console.ReadKey(true).Key)
                                     {
                                         case keyReviseInformation:
@@ -145,15 +145,18 @@ namespace BloodbankUI
                                     break;
                                 }
 
-                                Console.WriteLine($"Du är inloggad som personal: {loggedInStaff.FirstName} {loggedInStaff.LastName}");
+                                
                                 bool staffmenu = true;
                                 while (staffmenu)
                                 {
-                                    PrintStaffMenuOption();
+                                    PrintStaffMenuOption(loggedInStaff.FirstName, loggedInStaff.LastName, loggedInStaff.Title);
                                     switch (Console.ReadKey(true).Key)
                                     {
                                         case keyCheckAmountBlood:
                                         {
+                                            Console.Clear();
+                                            Console.WriteLine("Tillgängligt blod");
+                                            Console.WriteLine("-------------------------------");
                                             try
                                             {
                                                 foreach (Donation donation in bb.StoredBlood())
@@ -165,7 +168,6 @@ namespace BloodbankUI
                                             {
                                                 Console.WriteLine("Kunde inte hämta data från databasen");
                                             }
-
                                             PauseProgram();
                                             break;
                                         }
@@ -213,7 +215,7 @@ namespace BloodbankUI
                                                 }
                                                 catch
                                                 {
-                                                    Console.WriteLine("Kunde inte kontakta databasen.");
+                                                    Console.WriteLine("Kunde inte hitta någon med den valda blodgruppen.");
                                                 }
 
                                                 PauseProgram();
@@ -242,9 +244,8 @@ namespace BloodbankUI
                                                         bb.AddUser(newStaff);
                                                         loopAgain = false;
                                                     }
-                                                    catch (SqlException)
+                                                    catch 
                                                     {
-                                                        //Console.WriteLine(e);
                                                         Console.WriteLine("Nu gick det lite fel!");
                                                         Console.WriteLine("Tryck valfri knapp för att fortsätta.");
                                                         Console.WriteLine($"Tryck {keyQuit} för att återgå till menyn.");
@@ -262,12 +263,12 @@ namespace BloodbankUI
                                                 break;
                                             }
                                     }
-                                }
-                                //PauseProgram();
+                                }                                
                             }
-                            else
+                            else if (loginStatus == 0)
                             {
-                                Console.WriteLine("FEL...");
+                                Console.Clear();
+                                Console.WriteLine("ID-nummer eller lösenord är fel");
                                 PauseProgram();
                                 break;
                             }
@@ -281,15 +282,16 @@ namespace BloodbankUI
                             {
                                 Console.Clear();
                                 PrintRequiredToDonate();
-                                Thread.Sleep(3000);                                
+                                Thread.Sleep(3000);   
 
                                 bool healthOK = true;
                                 bool availableToDonate = true;
                                 bool loopAgain = true;
                                 while (loopAgain)
                                 {
+                                    Console.Clear();                             
                                     Console.Write("Skriv in ditt personnummer, 12 siffror (YYYYMMDDXXXX): ");
-                                    string idNumber = ReadLineAsStringOfDidgits(12, ":> "); // se om denna funkar som önskat !
+                                    string idNumber = ReadLineAsStringOfDidgits(12, ":> ");
                                     Console.Write("\nSkriv in förnamn");
                                     string firstName = ReadLineAsString(":> ");
                                     Console.Write("\nSkriv in efternamn");
@@ -297,14 +299,12 @@ namespace BloodbankUI
                                     Console.WriteLine("\nVilken blodgrupp tillhör du (1-4): ");
                                     PrintBloodGroupMenu();
                                     int bloodGroup = BloodGroupChoice();
-
-                                    //int inputBloodGroup = ReadKeyAsInt(":> ", 1, 4); //kan man få "enum length", ist för 4?
-
+                                    Console.WriteLine($":> {bloodGroup}");
                                     BloodGroup bloodtype = (BloodGroup)bloodGroup;
                                     Console.Write("\nSkriv in din email: ");
-                                    string eMail = ReadLineAsString(":>");
+                                    string eMail = ReadLineAsString(":> ");
                                     Console.Write("\nVälj ett lösenord: ");
-                                    string passWord = ReadLineAsString(":>");
+                                    string passWord = ReadLineAsString(":> ");
 
                                     Console.Clear();
                                     Console.WriteLine("Du har skrivit in följande:");
@@ -327,7 +327,7 @@ namespace BloodbankUI
                                     }
                                     else if (correctInformation == keyNej)
                                     {
-                                        Console.WriteLine("Ajdå, då får nu fylla i alla uppgifterna igen..    :) \n");
+                                        Console.WriteLine("\nAjdå, då får du fylla i alla uppgifterna igen..    :) \n");
                                         Console.WriteLine("Tryck valfri knapp för att fortsätta.");
                                         Console.WriteLine($"Tryck {keyQuit} för att återgå till menyn.");
                                         ConsoleKey input = Console.ReadKey(true).Key;
@@ -337,15 +337,19 @@ namespace BloodbankUI
                                 PauseProgram();
                             }
                             else
-                            {
-                                Console.Clear();
+                            {                                
                                 PrintNotRequiredEnough();
+                                Thread.Sleep(3000);
+                                Console.
+                                Clear();
+                                Console.WriteLine("Du skickas nu tillbaka till startmenyn"); 
+                                Thread.Sleep(3000);
                             }
                             break;
                         }
                     case keyQuit:
                         {
-                            Console.WriteLine("Tack för att du besökte oss, Välkommen Åter!");
+                            Console.WriteLine("\nTack för att du besökte oss, Välkommen Åter!");
                             Thread.Sleep(1000);
                             isRunning = false;
                             break;
@@ -365,18 +369,18 @@ namespace BloodbankUI
         }
         private static void PrintRequiredToDonate()
         {
+            Console.Clear();
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("---  Grattis du är godkänd för att ge blod ---");
             Console.WriteLine("---        Tack För Din Vilja !            ---");            
         }
         private static void PrintNotRequiredEnough()
         {
+            Console.Clear();
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("---    Tyvärr uppfyller du inte kraven     ---");
             Console.WriteLine("---   för att kunna donera blod just nu.   ---");
-            Console.WriteLine("---        Tack För Din Vilja !            ---");
-            Thread.Sleep(3000);
-            Console.WriteLine("Du skickas nu tillbaka till startmenyn");          
+            Console.WriteLine("---        Tack För Din Vilja !            ---");         
         }
 
         private static void PrintStartMenuOption()
@@ -387,9 +391,10 @@ namespace BloodbankUI
             Console.WriteLine($"{keyCreateAccount} : Registrera nytt donator konto");
             Console.WriteLine($"{keyQuit} : Avsluta");
         }
-        private static void PrintStaffMenuOption()
+        private static void PrintStaffMenuOption(string firstName, string lastName, string titel)
         {
             Console.Clear();
+            Console.WriteLine($"Du är inloggad som personal: {firstName} {lastName}: {titel}");
             Console.WriteLine($"-------------------------------");
             Console.WriteLine($"{keyCheckAmountBlood} : Kolla hur mycket blod som finns");
             Console.WriteLine($"{keyRegisterNewDonation} : Registrera ny bloddonation");
@@ -398,9 +403,10 @@ namespace BloodbankUI
             Console.WriteLine($"{keyLoggout} : Logga ut");
         }
 
-        private static void PrintDonorMenu()
+        private static void PrintDonorMenu(string firstName, string lastName)
         {
             Console.Clear();
+            Console.WriteLine($"Du är inloggad som bloddonator: {firstName} {lastName}");
             Console.WriteLine($"-------------------------------");
             Console.WriteLine($"{keyReviseInformation} : Vill du ändra din status som donator?");
             Console.WriteLine($"{keyLoggout} : Logga ut");
