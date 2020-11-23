@@ -75,6 +75,10 @@ namespace BloodbankUI
 
                                 while (donormenu)
                                 {
+                                    foreach (var loggedInUser in bb.GetUserInfo(inputUserID))
+                                    {
+                                        loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.AvailableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
+                                    }
                                     
                                     string available = "ej tillgänglig";
                                     
@@ -90,6 +94,7 @@ namespace BloodbankUI
                                                 {
                                                     available = "tillgänglig";
                                                 }
+                                                
                                                 Console.WriteLine($"Din status är satt som {available} för donation.");
                                                 Console.WriteLine($"Vill du ändra detta? [{keyJa}/{keyNej}]");
                                                 if (Console.ReadKey(true).Key == keyJa)
@@ -106,7 +111,8 @@ namespace BloodbankUI
                                                         ConsoleKey input = Console.ReadKey(true).Key;
                                                         if (input == keyQuit) loopAgain = false;
                                                     }
-                                                    Console.WriteLine("Din status är uppdaterad.");
+                                                    //uppdatera inloggad information
+                                                        Console.WriteLine($"Din status är uppdaterad, satt till {available}.");
                                                         loopAgain = false;
                                                         PauseProgram();
                                                     }
@@ -153,39 +159,40 @@ namespace BloodbankUI
                                     switch (Console.ReadKey(true).Key)
                                     {
                                         case keyCheckAmountBlood:
-                                        {
-                                            Console.Clear();
-                                            Console.WriteLine("Tillgängligt blod");
-                                            Console.WriteLine("-------------------------------");
-                                            try
                                             {
-                                                foreach (Donation donation in bb.StoredBlood())
+                                                Console.Clear();
+                                                Console.WriteLine("Tillgängligt blod");
+                                                Console.WriteLine("-------------------------------");
+                                                try
                                                 {
-                                                    Console.WriteLine($"{donation.AmountOfBlood} Enheter : Blodgrupp {donation.Bloodgroup}");
+                                                    foreach (Donation donation in bb.StoredBlood())
+                                                    {
+                                                        Console.WriteLine($"{donation.AmountOfBlood} Enheter : Blodgrupp {donation.Bloodgroup}");
+                                                    }
                                                 }
+                                                catch
+                                                {
+                                                    Console.WriteLine("Kunde inte hämta data från databasen");
+                                                }
+                                                PauseProgram();
+                                                break;
                                             }
-                                            catch
-                                            {
-                                                Console.WriteLine("Kunde inte hämta data från databasen");
-                                            }
-                                            PauseProgram();
-                                            break;
-                                        }
                                         case keyRegisterNewDonation:
                                             {
                                                 bool loopAgain = true;
                                                 while (loopAgain)
                                                 {
+                                                    Console.Clear();
                                                     Console.Write("Antal enheter: ");
-                                                    int amountOfBlood = ReadKeyAsInt(":> ", 1, 10);
+                                                    int amountOfBlood = ReadStringAsInt(":> ", 1, 10);
 
                                                     Console.Write("Donator-ID (12 siffror): ");
-                                                    string donorID = ReadLineAsStringOfDidgits(12, ":>");
+                                                    string donorID = ReadLineAsStringOfDidgits(12, ":> ");
                                                     Donation donation = new Donation(amountOfBlood, donorID, loggedInStaff.IDNumber);
                                                     try
                                                     {
                                                         bb.AddDonation(donation);
-                                                        Console.WriteLine("Donationen är nu registrerad!");
+                                                        Console.WriteLine("\nDonationen är nu registrerad!");
                                                         loopAgain = false;
                                                     }
                                                     catch
@@ -202,6 +209,7 @@ namespace BloodbankUI
                                             }
                                         case keyRequestBloodDonation:
                                             {
+                                                Console.Clear();
                                                 Console.WriteLine("Vilken Blodgrupp behövs det mer av?");
                                                 PrintBloodGroupMenu();
                                                 int bloodgroup = BloodGroupChoice();
@@ -386,6 +394,7 @@ namespace BloodbankUI
         private static void PrintStartMenuOption()
         {
             Console.Clear();
+            Console.WriteLine($"Start meny");
             Console.WriteLine($"-------------------------------");
             Console.WriteLine($"{keyLoggin} : Logga in");
             Console.WriteLine($"{keyCreateAccount} : Registrera nytt donator konto");
@@ -464,7 +473,7 @@ namespace BloodbankUI
 
             return output = input;
         }
-        private static int ReadKeyAsInt(string printString, int minValue, int maxValue)
+        private static int ReadStringAsInt(string printString, int minValue, int maxValue)
         {
             int output = -1;
             bool success = false;
@@ -472,16 +481,16 @@ namespace BloodbankUI
             do
             {
                 Console.Write(printString);
-                Char input = Console.ReadKey(true).KeyChar;
+                string input = Console.ReadLine();
                 try
                 {
                     output = Convert.ToInt32(input);
                     if ((maxValue == 0 || output <= maxValue) && output >= minValue) success = true;
-                    else Console.WriteLine($"Skriv en siffra mellan {minValue} - {maxValue}");
+                    else Console.WriteLine($"Skriv antal enheter mellan {minValue} - {maxValue}");
                 }
                 catch
                 {
-                    Console.WriteLine("Hoppsan, du skrev inte in en siffra eller en för stort/litet tal! Försök igen.");
+                    Console.WriteLine("Hoppsan, du skrev inte in en siffra! Försök igen.");
                 }
             } while (!success);
 
