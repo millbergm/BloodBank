@@ -35,11 +35,11 @@ namespace BloodbankUI
                         {
                             int loginStatus = 0;
                             Console.Clear();
-                            Console.WriteLine("Skriv in ditt användar-ID:");
+                            Console.WriteLine("Skriv in ditt personnummer:");
                             string inputUserID = ReadLineAsString(":>");
                             if (IsDigitsOnly(inputUserID) == false)
                             {
-                                Console.WriteLine("Du angav ett ID av fel format.");
+                                Console.WriteLine("Du angav personnummer av fel format.");
                                 PauseProgram();
                                 break;
                             }
@@ -59,80 +59,79 @@ namespace BloodbankUI
                             {
                                 bool donormenu = true;
                                 BloodDonor loggedInDonor = null;
-                                try
-                                {
-                                    foreach (var loggedInUser in bb.GetUserInfo(inputUserID))
-                                    {
-                                        loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.AvailableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
-                                    }
-                                }
-                                catch
-                                {
-                                    Console.WriteLine("Något verkar strula med databasen. Är du ansluten till internet?");
-                                    donormenu = false;
-                                    PauseProgram();
-                                }
 
                                 while (donormenu)
                                 {
-                                    foreach (var loggedInUser in bb.GetUserInfo(inputUserID))
+                                    try
                                     {
-                                        loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.AvailableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
+                                        foreach (var loggedInUser in bb.GetUserInfo(inputUserID))
+                                        {
+                                            loggedInDonor = new BloodDonor(loggedInUser.FirstName, loggedInUser.LastName, loggedInUser.ID, loggedInUser.Email, Convert.ToBoolean(loggedInUser.AvailableToDonate), Convert.ToBoolean(loggedInUser.HealthOK), loggedInUser.BloodGroupID, loggedInUser.LatestDonation);
+                                        }
                                     }
-                                    
-                                    string available = "ej tillgänglig";
-                                    
+                                    catch
+                                    {
+                                        Console.WriteLine("Något verkar strula med databasen. Är du ansluten till internet?");
+                                        donormenu = false;
+                                        PauseProgram();
+                                    }
+
                                     PrintDonorMenu(loggedInDonor.FirstName, loggedInDonor.LastName);
                                     switch (Console.ReadKey(true).Key)
                                     {
                                         case keyReviseInformation:
-                                        {
-                                        bool loopAgain = true;
-                                            while (loopAgain)
                                             {
+                                                Console.Clear();
+                                                foreach (var loggedInUser in bb.GetUserInfo(inputUserID))
+                                                {
+                                                    loggedInDonor.AvailableToDonate = Convert.ToBoolean(loggedInUser.AvailableToDonate);
+                                                }
+                                                string available = "ej tillgänglig";
                                                 if (loggedInDonor.AvailableToDonate == true)
                                                 {
                                                     available = "tillgänglig";
                                                 }
-                                                
+
                                                 Console.WriteLine($"Din status är satt som {available} för donation.");
                                                 Console.WriteLine($"Vill du ändra detta? [{keyJa}/{keyNej}]");
-                                                if (Console.ReadKey(true).Key == keyJa)
+                                                bool loopAgain = true;
+                                                while (loopAgain)
                                                 {
-                                                    try
+                                                    ConsoleKey input = Console.ReadKey(true).Key;
+                                                    if (input == keyJa)
                                                     {
-                                                        bb.ChangeDonationStatus(loggedInDonor.AvailableToDonate, loggedInDonor.IDNumber);
+                                                        try
+                                                        {
+                                                            bb.ChangeDonationStatus(loggedInDonor.AvailableToDonate, loggedInDonor.IDNumber);
+                                                        }
+                                                        catch
+                                                        {
+                                                            Console.WriteLine("Det gick inte att uppdatera din status. Vänligen försök igen.");
+                                                            Console.WriteLine("Tryck valfri knapp för att fortsätta.");
+                                                            Console.WriteLine($"Tryck {keyQuit} för att återgå till menyn.");
+                                                        }
+                                                        Console.WriteLine($"\nDin status är nu ändrad.");
+                                                        Console.WriteLine("\nDu skickas nu tillbaka till menyn.");
+                                                        Thread.Sleep(3000);
+                                                        loopAgain = false;                                                            
                                                     }
-                                                    catch
+                                                    else if (input == keyNej)
                                                     {
-                                                        Console.WriteLine("Det gick inte att uppdatera din status. Vänligen försök igen.");
-                                                        Console.WriteLine("Tryck valfri knapp för att fortsätta.");
-                                                        Console.WriteLine($"Tryck {keyQuit} för att återgå till menyn.");
-                                                        ConsoleKey input = Console.ReadKey(true).Key;
-                                                        if (input == keyQuit) loopAgain = false;
-                                                    }
-                                                    //uppdatera inloggad information
-                                                        Console.WriteLine($"Din status är uppdaterad, satt till {available}.");
-                                                        loopAgain = false;
-                                                        PauseProgram();
-                                                    }
-                                                else if (Console.ReadKey(true).Key == keyNej)
-                                                    {
-                                                        Console.WriteLine("Du skickas nu tillbaka till menyn.");
+                                                        Console.WriteLine("\nDu skickas nu tillbaka till menyn.");
                                                         Thread.Sleep(1500);
                                                         loopAgain = false;
                                                     }
                                                 }
-                                            break;
-                                        }
+                                                break;
+                                            }
                                         case keyLoggout:
-                                        {
-                                            donormenu = false;
-                                            break;                                            
-                                        }
+                                            {
+                                                donormenu = false;
+                                                break;
+                                            }
                                     }
                                 }
-                                PauseProgram();
+                                
                             }
 
                             else if (loginStatus == 2)
@@ -151,7 +150,7 @@ namespace BloodbankUI
                                     break;
                                 }
 
-                                
+
                                 bool staffmenu = true;
                                 while (staffmenu)
                                 {
@@ -216,9 +215,9 @@ namespace BloodbankUI
                                                 BloodGroup type = (BloodGroup)bloodgroup;
                                                 try
                                                 {
-                                                    foreach (var item in bb.GetListForRequestDonation(bloodgroup))
+                                                    foreach (BloodDonor bloodDonor in bb.GetListForRequestDonation(bloodgroup))
                                                     {
-                                                        Console.WriteLine($"Till: {item.Email}, Hej {item.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp: {type}");
+                                                        Console.WriteLine($"Till: {bloodDonor.Email}, Hej {bloodDonor.FirstName}!, vi behöver mer blod av just din blodgrupp, blodgrupp: {type}");
                                                     }
                                                 }
                                                 catch
@@ -252,7 +251,7 @@ namespace BloodbankUI
                                                         bb.AddUser(newStaff);
                                                         loopAgain = false;
                                                     }
-                                                    catch 
+                                                    catch
                                                     {
                                                         Console.WriteLine("Nu gick det lite fel!");
                                                         Console.WriteLine("Tryck valfri knapp för att fortsätta.");
@@ -271,7 +270,7 @@ namespace BloodbankUI
                                                 break;
                                             }
                                     }
-                                }                                
+                                }
                             }
                             else if (loginStatus == 0)
                             {
@@ -290,14 +289,14 @@ namespace BloodbankUI
                             {
                                 Console.Clear();
                                 PrintRequiredToDonate();
-                                Thread.Sleep(3000);   
+                                Thread.Sleep(3000);
 
                                 bool healthOK = true;
                                 bool availableToDonate = true;
                                 bool loopAgain = true;
                                 while (loopAgain)
                                 {
-                                    Console.Clear();                             
+                                    Console.Clear();
                                     Console.Write("Skriv in ditt personnummer, 12 siffror (YYYYMMDDXXXX): ");
                                     string idNumber = ReadLineAsStringOfDidgits(12, ":> ");
                                     Console.Write("\nSkriv in förnamn");
@@ -345,12 +344,12 @@ namespace BloodbankUI
                                 PauseProgram();
                             }
                             else
-                            {                                
+                            {
                                 PrintNotRequiredEnough();
                                 Thread.Sleep(3000);
                                 Console.
                                 Clear();
-                                Console.WriteLine("Du skickas nu tillbaka till startmenyn"); 
+                                Console.WriteLine("Du skickas nu tillbaka till startmenyn");
                                 Thread.Sleep(3000);
                             }
                             break;
@@ -380,7 +379,7 @@ namespace BloodbankUI
             Console.Clear();
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("---  Grattis du är godkänd för att ge blod ---");
-            Console.WriteLine("---        Tack För Din Vilja !            ---");            
+            Console.WriteLine("---        Tack För Din Vilja !            ---");
         }
         private static void PrintNotRequiredEnough()
         {
@@ -388,7 +387,7 @@ namespace BloodbankUI
             Console.WriteLine("----------------------------------------------");
             Console.WriteLine("---    Tyvärr uppfyller du inte kraven     ---");
             Console.WriteLine("---   för att kunna donera blod just nu.   ---");
-            Console.WriteLine("---        Tack För Din Vilja !            ---");         
+            Console.WriteLine("---        Tack För Din Vilja !            ---");
         }
 
         private static void PrintStartMenuOption()
