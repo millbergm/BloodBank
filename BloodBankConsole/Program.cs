@@ -164,8 +164,10 @@ namespace BloodbankUI
                                                 try
                                                 {
                                                     foreach (Donation donation in bb.StoredBlood())
-                                                    {
-                                                        Console.WriteLine($"{donation.AmountOfBlood} Enheter : Blodgrupp {donation.Bloodgroup}");
+                                                    {   
+                                                        BloodGroup bloodGroup = (BloodGroup)donation.Bloodgroup;
+                                                                                                             
+                                                        Console.WriteLine($"{donation.AmountOfBlood} Enheter : Blodgrupp {bloodGroup}");
                                                     }
                                                 }
                                                 catch
