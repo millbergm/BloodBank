@@ -1,6 +1,5 @@
 namespace BloodbankFunc
 {
-
     public enum BloodGroup
     {
          O = 1,
